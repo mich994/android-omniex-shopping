@@ -1,0 +1,20 @@
+package nl.omniex.omniexshopping.di.modules;
+
+import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
+import nl.omniex.omniexshopping.ui.app.auth.login.LoginActivity_;
+import nl.omniex.omniexshopping.ui.app.main.MainMenuActivity_;
+import nl.omniex.omniexshopping.ui.app.splash.SplashActivity_;
+
+@Module
+public abstract class ActivitiesModule {
+
+    @ContributesAndroidInjector
+    public abstract MainMenuActivity_ contributeMainMenuActivity();
+
+    @ContributesAndroidInjector
+    public abstract SplashActivity_ contributeSplashActivity();
+
+    @ContributesAndroidInjector
+    public abstract LoginActivity_ contributeLoginActivity();
+}

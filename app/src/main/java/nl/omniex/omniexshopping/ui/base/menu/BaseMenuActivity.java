@@ -6,14 +6,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.EBean;
 
 import nl.omniex.omniexshopping.ui.base.BaseActivity;
 import nl.omniex.omniexshopping.ui.base.BasePresenter;
 import nl.omniex.omniexshopping.ui.base.BaseView;
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout;
 
-@EActivity
+@EBean
 public abstract class BaseMenuActivity<MenuAdapter extends BaseMenuAdapter, MView extends BaseView, MPresenter extends BasePresenter<MView>> extends BaseActivity<MView, MPresenter> implements MenuHelper.MenuBase<MenuAdapter> {
 
     protected MenuHelper<MenuAdapter> mMenuHelper;

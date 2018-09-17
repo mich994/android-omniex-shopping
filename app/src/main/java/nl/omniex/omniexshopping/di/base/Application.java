@@ -6,7 +6,8 @@ import android.support.multidex.MultiDex;
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
 
-public class Application extends DaggerApplication{
+
+public class Application extends DaggerApplication {
 
     private static Application mInstance;
 

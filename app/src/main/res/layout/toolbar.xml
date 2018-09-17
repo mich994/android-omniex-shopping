@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/toolbar_icon_center"
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 android:src="@drawable/twotone_shopping_cart_black_36"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </FrameLayout>
 
     </LinearLayout>
