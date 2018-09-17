@@ -20,7 +20,7 @@ public class ProfileRepository {
 
     public Single<Response<Void>> login(Login login){
         return mOmniexApi
-                .login(login)
+                .login("Bearer 150b6660719180344fd96ac1f0045c2f80b3a8dd",login)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

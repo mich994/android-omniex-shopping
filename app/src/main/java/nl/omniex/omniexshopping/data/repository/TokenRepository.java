@@ -9,7 +9,6 @@ import nl.omniex.omniexshopping.data.api.OmniexApi;
 import retrofit2.Response;
 
 import static nl.omniex.omniexshopping.data.Constants.BASIC_TOKEN;
-import static nl.omniex.omniexshopping.data.Constants.GRANT_TYPE;
 
 public class TokenRepository {
 
@@ -22,7 +21,7 @@ public class TokenRepository {
 
     public Single<Response<Void>> getAccessToken(){
         return mOmniexApi
-                .getAccessToken(BASIC_TOKEN, GRANT_TYPE)
+                .getAccessToken(BASIC_TOKEN)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

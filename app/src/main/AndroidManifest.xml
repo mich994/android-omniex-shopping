@@ -29,6 +29,17 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.app.auth.register.RegisterActivity_"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.app.auth.StartActivity_"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+
     </application>
 
 

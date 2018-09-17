@@ -6,18 +6,17 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 public interface OmniexApi {
 
-    @POST("oauth2/token/{grant_type}")
+    @POST("index.php?route=feed/rest_api/gettoken&grant_type=client_credentials")
     Single<Response<Void>> getAccessToken(
-            @Header("Authorization") String header,
-            @Path("grant_type") String grantType
+            @Header("Authorization") String header
     );
 
-    @POST("login")
+    @POST("index.php?route=rest/login/login")
     Single<Response<Void>> login(
+            @Header("Authorization") String accessToken,
             @Body Login login
     );
 }
