@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:contentScaleClosed="1"
+    app:contentScaleOpen="0.9"
+    app:menuAlphaClosed="0"
+    app:menuAlphaOpen="1"
+    app:menuScaleClosed="1"
+    app:menuScaleOpen="1">
+
+    <nl.psdcompany.duonavigationdrawer.views.DuoMenuView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation = "vertical"
+        android:alpha="0.8"
+        android:tag="menu"/>
+
+    <FrameLayout
+        android:id="@+id/parent_layout"
+        android:tag="content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar" />
+
+       <FrameLayout
+           android:id="@+id/fragment_container"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"/>
+
+    </FrameLayout>
+    <View
+        android:id="@+id/menu_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:alpha="0"/>
+</nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout>
