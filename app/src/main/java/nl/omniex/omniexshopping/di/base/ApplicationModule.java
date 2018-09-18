@@ -4,8 +4,13 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
+import nl.omniex.omniexshopping.di.modules.ActivitiesModule;
+import nl.omniex.omniexshopping.di.modules.ApiModule;
+import nl.omniex.omniexshopping.di.modules.FragmentsModule;
 
-@Module
+@Module(includes = {ActivitiesModule.class,
+        FragmentsModule.class,
+        ApiModule.class})
 public class ApplicationModule {
 
     private Context mContext;

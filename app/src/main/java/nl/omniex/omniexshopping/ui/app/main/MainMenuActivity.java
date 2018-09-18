@@ -1,5 +1,6 @@
 package nl.omniex.omniexshopping.ui.app.main;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 
 import java.util.ArrayList;
@@ -7,11 +8,17 @@ import java.util.List;
 
 import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.data.model.MenuItem;
+import nl.omniex.omniexshopping.ui.app.main.home.HomeFragment_;
 import nl.omniex.omniexshopping.ui.base.menu.BaseMenuActivity;
 import nl.omniex.omniexshopping.ui.base.menu.MenuAdapter;
 
-@EActivity
+@EActivity(R.layout.activity_main_menu)
 public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView, MainMenuPresenter> implements MainMenuView {
+
+    @AfterViews
+    void initHomeFragment(){
+        goToFragment(HomeFragment_.builder().build(), false, "");
+    }
 
     @Override
     protected void onFirstCreate() {
@@ -66,11 +73,16 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
     @Override
     public MenuAdapter createAdapter() {
         List<MenuItem> menuItems = new ArrayList<>();
+        menuItems.add(new MenuItem("Profile"));
+        menuItems.add(new MenuItem("Categories"));
+        menuItems.add(new MenuItem("History"));
+        menuItems.add(new MenuItem("Newsletter"));
+
         return new MenuAdapter(menuItems);
     }
 
-    public void setToolbar() {
-
+    private void setToolbar() {
+        getCustomToolbar().setIconStarClickListener(this::toggleMenu);
     }
 
 }
