@@ -6,6 +6,7 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import nl.omniex.omniexshopping.data.api.OmniexApi;
+import nl.omniex.omniexshopping.data.model.response.FeaturedProductsResponse;
 import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 import retrofit2.Response;
 
@@ -49,7 +50,7 @@ public class ProductsRepository {
     }
 
 
-    public Single<Response<Void>> getListOfFeatured(){
+    public Single<Response<FeaturedProductsResponse>> getListOfFeatured(){
         return mOmniexApi
                 .getListOfFeatured(mSharedPrefUtils.getAccessToken())
                 .subscribeOn(Schedulers.io())

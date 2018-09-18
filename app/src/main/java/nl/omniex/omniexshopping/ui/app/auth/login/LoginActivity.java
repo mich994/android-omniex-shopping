@@ -10,6 +10,7 @@ import org.androidannotations.annotations.ViewById;
 
 import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.data.model.auth.Login;
+import nl.omniex.omniexshopping.ui.app.main.MainMenuActivity_;
 import nl.omniex.omniexshopping.ui.base.BaseActivity;
 
 @EActivity(R.layout.activity_login)
@@ -55,11 +56,7 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
 
     @Override
     public void onLoginSuccess() {
-        getPresenter().getAddressList();
-        getPresenter().getCategories();
-        getPresenter().getListOfFeatured();
-        getPresenter().getProducts();
-        getPresenter().getProductsByCat();
-        getPresenter().getProductDetails();
+        finish();
+        MainMenuActivity_.intent(this).start();
     }
 }

@@ -17,14 +17,25 @@ public class MenuView extends LinearLayout {
     @ViewById(R.id.title_menu_item)
     TextView mTitle;
 
+    private int mPosition;
+
     public MenuView(Context context) {
         super(context);
-        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         setLayoutParams(lp);
     }
 
-    public MenuView bind(MenuItem menuItem){
+    public MenuView bind(MenuItem menuItem) {
         mTitle.setText(menuItem.getTitle());
+        return this;
+    }
+
+    public MenuView setSelectedBg(boolean isSelected) {
+        if (isSelected)
+            mTitle.setBackground(getContext().getDrawable(R.drawable.background_menu_item_light));
+        else
+            mTitle.setBackground(getContext().getDrawable(R.drawable.background_menu_item_dark));
+
         return this;
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 public abstract class BaseMenuAdapter<Model, Row extends View> extends BaseAdapter {
 
     private List<Model> mMenuOptions = new ArrayList<>();
+    private int mSelected = 0;
 
     private SparseBooleanArray mBooleanArray;
 
@@ -30,6 +31,14 @@ public abstract class BaseMenuAdapter<Model, Row extends View> extends BaseAdapt
             mBooleanArray.put(key, key == position);
         }
         notifyDataSetChanged();
+    }
+
+    public boolean isSelected(int position){
+        for(int i = 0; i < mBooleanArray.size(); i++){
+            if(mBooleanArray.get(position))
+                return true;
+        }
+        return false;
     }
 
     private void resetMenuOptions(List<Model> menuOptions) {

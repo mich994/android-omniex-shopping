@@ -4,6 +4,7 @@ import io.reactivex.Single;
 import nl.omniex.omniexshopping.data.model.auth.Login;
 import nl.omniex.omniexshopping.data.model.auth.OldToken;
 import nl.omniex.omniexshopping.data.model.response.AccessTokenResponse;
+import nl.omniex.omniexshopping.data.model.response.FeaturedProductsResponse;
 import nl.omniex.omniexshopping.data.model.response.LoginResponse;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -66,7 +67,7 @@ public interface OmniexApi {
     );
 
     @GET("index.php?route=feed/rest_api/featured")
-    Single<Response<Void>> getListOfFeatured(
+    Single<Response<FeaturedProductsResponse>> getListOfFeatured(
             @Header("Authorization") String accessToken
     );
 }

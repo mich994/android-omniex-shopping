@@ -1,7 +1,10 @@
 package nl.omniex.omniexshopping.ui.app.main;
 
+import android.widget.ImageView;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +18,12 @@ import nl.omniex.omniexshopping.ui.base.menu.MenuAdapter;
 @EActivity(R.layout.activity_main_menu)
 public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView, MainMenuPresenter> implements MainMenuView {
 
+    @ViewById(R.id.duo_view_menu_background)
+    ImageView mDuoDrawerLayout;
+
     @AfterViews
-    void initHomeFragment(){
+    void initHomeFragment() {
+        mDuoDrawerLayout.setBackgroundResource(R.color.colorPrimaryDark);
         goToFragment(HomeFragment_.builder().build(), false, "");
     }
 
@@ -73,16 +80,23 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
     @Override
     public MenuAdapter createAdapter() {
         List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new MenuItem("Profile"));
-        menuItems.add(new MenuItem("Categories"));
-        menuItems.add(new MenuItem("History"));
+        menuItems.add(new MenuItem("Featured Products"));
+        menuItems.add(new MenuItem("Bestsellers"));
+        menuItems.add(new MenuItem("Products"));
+        menuItems.add(new MenuItem("Profile Details"));
+        menuItems.add(new MenuItem("Order History"));
+        menuItems.add(new MenuItem("Shipping Methods"));
         menuItems.add(new MenuItem("Newsletter"));
+        menuItems.add(new MenuItem("About Omniex"));
 
         return new MenuAdapter(menuItems);
     }
 
     private void setToolbar() {
-        getCustomToolbar().setIconStarClickListener(this::toggleMenu);
+        getCustomToolbar()
+                .setIconStart(R.drawable.twotone_menu_black_36)
+                .setIconEnd(R.drawable.twotone_shopping_cart_black_36)
+                .setIconStarClickListener(this::toggleMenu);
     }
 
 }

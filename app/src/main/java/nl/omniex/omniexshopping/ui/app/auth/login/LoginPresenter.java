@@ -44,7 +44,9 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     void getListOfFeatured(){
         addDisposable(mProductsRepository
         .getListOfFeatured()
-        .subscribe(voidResponse -> {}, Throwable::printStackTrace));
+        .subscribe(featureProductsResponse-> {
+
+        }, Throwable::printStackTrace));
     }
 
     void getProducts(){
