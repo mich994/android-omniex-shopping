@@ -7,21 +7,42 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import nl.omniex.omniexshopping.data.api.OmniexApi;
 import nl.omniex.omniexshopping.data.model.auth.Login;
+import nl.omniex.omniexshopping.data.model.response.LoginResponse;
+import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 import retrofit2.Response;
 
 public class ProfileRepository {
 
     private OmniexApi mOmniexApi;
+    private SharedPrefUtils mSharedPrefUtils;
 
     @Inject
-    ProfileRepository(OmniexApi omniexApi){
+    ProfileRepository(OmniexApi omniexApi, SharedPrefUtils sharedPrefUtils) {
         mOmniexApi = omniexApi;
+        mSharedPrefUtils = sharedPrefUtils;
     }
 
-    public Single<Response<Void>> login(Login login){
+    public Single<Response<LoginResponse>> login(Login login) {
         return mOmniexApi
-                .login("Bearer 150b6660719180344fd96ac1f0045c2f80b3a8dd",login)
+                .login(mSharedPrefUtils.getAccessToken(), login)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Single<Response<Void>> logout() {
+        return mOmniexApi
+                .logout(mSharedPrefUtils.getAccessToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Response<Void>> getAddressList() {
+        return mOmniexApi
+                .getAddressList(mSharedPrefUtils.getAccessToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
+
 }

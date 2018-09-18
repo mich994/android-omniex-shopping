@@ -31,6 +31,7 @@ public class ApiModule {
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(10, TimeUnit.SECONDS)
                     .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                    .retryOnConnectionFailure(true)
                     .build();
         }
 

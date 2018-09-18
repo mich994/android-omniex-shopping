@@ -23,6 +23,7 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
 
     @AfterViews
     void setTempCredentials(){
+        getPresenter().logout();
         mEmailInput.setText("michlip994@gmail.com");
         mPasswordInput.setText("micho994");
     }
@@ -32,7 +33,6 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
         switch (v.getId()){
             case R.id.login_login_btn:
                 getPresenter().login(new Login(mEmailInput.getText().toString(), mPasswordInput.getText().toString()));
-//                MainMenuActivity_.intent(this).start();
                 break;
             case R.id.login_exit_btn:
                 finish();
@@ -55,6 +55,11 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
 
     @Override
     public void onLoginSuccess() {
-
+        getPresenter().getAddressList();
+        getPresenter().getCategories();
+        getPresenter().getListOfFeatured();
+        getPresenter().getProducts();
+        getPresenter().getProductsByCat();
+        getPresenter().getProductDetails();
     }
 }

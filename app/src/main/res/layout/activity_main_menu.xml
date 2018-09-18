@@ -4,7 +4,7 @@
     android:id="@+id/home_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorAccent"
     app:contentScaleClosed="1"
     app:contentScaleOpen="0.9"
     app:menuAlphaClosed="0"
@@ -14,7 +14,7 @@
 
     <nl.psdcompany.duonavigationdrawer.views.DuoMenuView
         app:header="@layout/view_menu_header"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation = "vertical"
