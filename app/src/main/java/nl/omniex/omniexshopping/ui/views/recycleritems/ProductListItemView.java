@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
@@ -49,5 +50,10 @@ public class ProductListItemView extends LinearLayout {
 
     public void setProductItemClickListener(BaseRecyclerAdapter.ItemClickListener<FeaturedProduct> productItemClickListener) {
         mProductItemClickListener = productItemClickListener;
+    }
+
+    @Click(R.id.product_list_item_fl)
+    void onItemClick(){
+        mProductItemClickListener.onItemClick(mFeaturedProduct);
     }
 }

@@ -7,6 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import nl.omniex.omniexshopping.data.api.OmniexApi;
 import nl.omniex.omniexshopping.data.model.response.FeaturedProductsResponse;
+import nl.omniex.omniexshopping.data.model.response.ProductResponse;
 import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 import retrofit2.Response;
 
@@ -42,9 +43,9 @@ public class ProductsRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Response<Void>> getProductDetails(){
+    public Single<Response<ProductResponse>> getProductDetails(Integer id){
         return mOmniexApi
-                .getProductDetails(mSharedPrefUtils.getAccessToken(), 28)
+                .getProductDetails(mSharedPrefUtils.getAccessToken(), id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

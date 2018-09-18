@@ -98,4 +98,6 @@ dependencies {
 
     //Flexbox
     implementation 'com.google.android:flexbox:1.0.0'
+
+    implementation 'cz.intik:overflow-pager-indicator:1.2.1'
 }

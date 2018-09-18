@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nl.omniex.omniexshopping">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".di.base.Application"
@@ -20,10 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.app.main.MainMenuActivity_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.app.auth.login.LoginActivity_"
             android:launchMode="singleTask"
@@ -36,6 +38,11 @@
 
         <activity
             android:name=".ui.app.auth.StartActivity_"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.app.product.ProductDetailsActivity_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 

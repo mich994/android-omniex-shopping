@@ -6,6 +6,7 @@ import nl.omniex.omniexshopping.data.model.auth.OldToken;
 import nl.omniex.omniexshopping.data.model.response.AccessTokenResponse;
 import nl.omniex.omniexshopping.data.model.response.FeaturedProductsResponse;
 import nl.omniex.omniexshopping.data.model.response.LoginResponse;
+import nl.omniex.omniexshopping.data.model.response.ProductResponse;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -55,12 +56,6 @@ public interface OmniexApi {
     );
 
     @GET("index.php?route=feed/rest_api/products")
-    Single<Response<Void>> getProductDetails(
-            @Header("Authorization") String accessToken,
-            @Query("product_id") Integer productId
-    );
-
-    @GET("index.php?route=feed/rest_api/products")
     Single<Response<Void>> getProductsByCat(
             @Header("Authorization") String accessToken,
             @Query("category_id") Integer catId
@@ -69,6 +64,12 @@ public interface OmniexApi {
     @GET("index.php?route=feed/rest_api/featured")
     Single<Response<FeaturedProductsResponse>> getListOfFeatured(
             @Header("Authorization") String accessToken
+    );
+
+    @GET("index.php?route=feed/rest_api/products")
+    Single<Response<ProductResponse>> getProductDetails(
+            @Header("Authorization") String accessToken,
+            @Query("id") Integer id
     );
 }
 
