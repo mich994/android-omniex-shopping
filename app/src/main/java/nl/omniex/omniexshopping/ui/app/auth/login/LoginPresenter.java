@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import nl.omniex.omniexshopping.data.model.auth.Login;
 import nl.omniex.omniexshopping.data.repository.ProfileRepository;
 import nl.omniex.omniexshopping.ui.base.BasePresenter;
+import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 import timber.log.Timber;
 
 public class LoginPresenter extends BasePresenter<LoginView> {
@@ -20,16 +21,13 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         addDisposable(mProfileRepository
                 .login(login)
                 .subscribe(voidResponse -> {
-                    ifViewAttached(view -> view.onLoginSuccess());
+                    if (voidResponse.code() == 200) {
+                        SharedPrefUtils.setUserLogged(true);
+                        ifViewAttached(LoginView::onLoginSuccess);
+                    }
                 }, error -> {
                     error.printStackTrace();
                     Timber.e(error);
                 }));
-    }
-
-    void logout(){
-        addDisposable(mProfileRepository
-        .logout()
-        .subscribe(voidResponse -> {}, Throwable::printStackTrace));
     }
 }

@@ -17,21 +17,24 @@ import dagger.Lazy;
 import dagger.android.support.AndroidSupportInjection;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import nl.omniex.omniexshopping.R;
+import nl.omniex.omniexshopping.ui.base.menu.BaseMenuActivity;
 
 @EFragment
-public abstract class BaseFragment <V extends BaseView, P extends BasePresenter<V>> extends MvpFragment<V, P> {
+public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V>> extends MvpFragment<V, P> {
 
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private BaseActivity mBaseActivity;
+    private BaseMenuActivity mBaseMenuActivity;
 
     @Inject
     Lazy<P> mPresenter;
 
     @AfterInject
-    protected void afterInject(){
+    protected void afterInject() {
         try {
             AndroidSupportInjection.inject(this);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -56,17 +59,15 @@ public abstract class BaseFragment <V extends BaseView, P extends BasePresenter<
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(!(context instanceof BaseActivity))
-            throw new UnsupportedOperationException();
+        if ((context instanceof BaseActivity))
+            mBaseActivity = (BaseActivity) getActivity();
 
-        mBaseActivity = (BaseActivity) getActivity();
-
-        if(mBaseActivity!=null && mBaseActivity.getCustomToolbar()!=null){
+        if (mBaseActivity != null && mBaseActivity.getCustomToolbar() != null) {
             //reset toolbar
         }
     }
 
-    protected void goToFragment(Fragment fragment, boolean addToBackStack){
+    protected void goToFragment(Fragment fragment, boolean addToBackStack) {
         getBaseActivity().goToFragment(fragment, addToBackStack, "");
     }
 
@@ -76,11 +77,23 @@ public abstract class BaseFragment <V extends BaseView, P extends BasePresenter<
         mCompositeDisposable.dispose();
     }
 
-    protected BaseActivity getBaseActivity(){
+    protected void setToolbarIconMenuActivity() {
+        mBaseMenuActivity = (BaseMenuActivity) getActivity();
+        if (mBaseMenuActivity.getSupportFragmentManager().getBackStackEntryCount() > 1)
+            mBaseActivity.getCustomToolbar()
+                    .setIconStart(R.drawable.twotone_arrow_back_black_36)
+                    .setIconStarClickListener(() -> mBaseMenuActivity.getSupportFragmentManager().popBackStack());
+        else
+            mBaseActivity.getCustomToolbar()
+                    .setIconStart(R.drawable.twotone_menu_black_36)
+                    .setIconStarClickListener(() -> mBaseMenuActivity.toggleMenu());
+    }
+
+    protected BaseActivity getBaseActivity() {
         return mBaseActivity;
     }
 
-    protected void addDisposable(Disposable disposable){
+    protected void addDisposable(Disposable disposable) {
         mCompositeDisposable.add(disposable);
     }
 

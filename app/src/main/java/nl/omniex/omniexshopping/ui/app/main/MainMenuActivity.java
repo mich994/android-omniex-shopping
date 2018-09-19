@@ -11,6 +11,8 @@ import java.util.List;
 
 import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.data.model.MenuItem;
+import nl.omniex.omniexshopping.ui.app.auth.StartActivity_;
+import nl.omniex.omniexshopping.ui.app.categories.CategoriesFragment_;
 import nl.omniex.omniexshopping.ui.app.main.home.HomeFragment_;
 import nl.omniex.omniexshopping.ui.base.menu.BaseMenuActivity;
 import nl.omniex.omniexshopping.ui.base.menu.MenuAdapter;
@@ -59,19 +61,22 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
             MenuItem menuItem = (MenuItem) objectClicked;
             switch (position) {
                 case 0:
-                    showToastMessage(menuItem.getTitle(), 0);
+                    goToFragment(HomeFragment_.builder().build(), false, "");
                     break;
                 case 1:
                     showToastMessage(menuItem.getTitle(), 0);
                     break;
                 case 2:
-                    showToastMessage(menuItem.getTitle(), 0);
+                    goToFragment(CategoriesFragment_.builder().build(), true,"");
                     break;
                 case 3:
                     showToastMessage(menuItem.getTitle(), 0);
                     break;
                 case 4:
                     showToastMessage(menuItem.getTitle(), 0);
+                    break;
+                case 8:
+                    getPresenter().logout();
                     break;
             }
         }
@@ -88,8 +93,14 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
         menuItems.add(new MenuItem("Shipping Methods"));
         menuItems.add(new MenuItem("Newsletter"));
         menuItems.add(new MenuItem("About Omniex"));
+        menuItems.add(new MenuItem("Logout"));
 
         return new MenuAdapter(menuItems);
+    }
+
+    @Override
+    public void onBackPressed() {
+        toggleMenu();
     }
 
     private void setToolbar() {
@@ -99,4 +110,9 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
                 .setIconStarClickListener(this::toggleMenu);
     }
 
+    @Override
+    public void onLogoutSuccess() {
+        finishAffinity();
+        StartActivity_.intent(this).start();
+    }
 }

@@ -13,6 +13,7 @@ import org.androidannotations.annotations.ViewById;
 
 import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.ui.adapters.ProductDetailsImageAdapter;
+import nl.omniex.omniexshopping.utils.StringUtils;
 
 @EViewGroup(R.layout.view_details_image_item)
 public class ProductDetailsImageItemView extends LinearLayout {
@@ -31,7 +32,7 @@ public class ProductDetailsImageItemView extends LinearLayout {
     }
 
     public ProductDetailsImageItemView bind(String imageUrl, int position){
-        mImageUrl = imageUrl;
+        mImageUrl = StringUtils.fixUrl(imageUrl);
         mPosition = position;
         Glide.with(this).load(mImageUrl).into(mDetailsImage);
         return this;

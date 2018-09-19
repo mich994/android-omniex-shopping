@@ -4,6 +4,7 @@ import io.reactivex.Single;
 import nl.omniex.omniexshopping.data.model.auth.Login;
 import nl.omniex.omniexshopping.data.model.auth.OldToken;
 import nl.omniex.omniexshopping.data.model.response.AccessTokenResponse;
+import nl.omniex.omniexshopping.data.model.response.CategoriesResponse;
 import nl.omniex.omniexshopping.data.model.response.FeaturedProductsResponse;
 import nl.omniex.omniexshopping.data.model.response.LoginResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductResponse;
@@ -46,7 +47,7 @@ public interface OmniexApi {
     //region CATEGORIES
 
     @GET("index.php?route=feed/rest_api/categories")
-    Single<Response<Void>> getCategories(
+    Single<Response<CategoriesResponse>> getCategories(
             @Header("Authorization") String accessToken
     );
 

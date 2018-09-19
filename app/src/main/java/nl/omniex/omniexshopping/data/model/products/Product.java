@@ -24,8 +24,8 @@ public class Product {
     private List<String> mOriginalImageUrlsList;
     @SerializedName("price_excluding_tax")
     private Double mPriceExcTax;
-    @SerializedName("price_excluding_tax_formatted")
-    private String mPriceExcTaxFormatted;
+    @SerializedName("price_excluding_tax_formated")
+    private String mPriceExcTaxFormated;
     @SerializedName("rating")
     private Double mRating;
     @SerializedName("description")
@@ -141,12 +141,12 @@ public class Product {
         mPriceExcTax = priceExcTax;
     }
 
-    public String getPriceExcTaxFormatted() {
-        return mPriceExcTaxFormatted;
+    public String getPriceExcTaxFormated() {
+        return mPriceExcTaxFormated;
     }
 
-    public void setPriceExcTaxFormatted(String priceExcTaxFormatted) {
-        mPriceExcTaxFormatted = priceExcTaxFormatted;
+    public void setPriceExcTaxFormated(String priceExcTaxFormated) {
+        mPriceExcTaxFormated = priceExcTaxFormated;
     }
 
     public Double getRating() {

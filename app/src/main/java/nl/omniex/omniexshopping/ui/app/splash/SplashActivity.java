@@ -5,7 +5,9 @@ import org.androidannotations.annotations.EActivity;
 
 import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.ui.app.auth.StartActivity_;
+import nl.omniex.omniexshopping.ui.app.main.MainMenuActivity_;
 import nl.omniex.omniexshopping.ui.base.BaseActivity;
+import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 
 @EActivity(R.layout.activity_splash)
 public class SplashActivity extends BaseActivity<SplashView, SplashPresenter> implements SplashView {
@@ -18,7 +20,10 @@ public class SplashActivity extends BaseActivity<SplashView, SplashPresenter> im
     @Override
     public void onTokenFetched() {
         finish();
-        StartActivity_.intent(this).start();
+        if (SharedPrefUtils.isUserLogged())
+            MainMenuActivity_.intent(this).start();
+        else
+            StartActivity_.intent(this).start();
     }
 
     @Override

@@ -41,7 +41,7 @@ public class ProductListItemView extends LinearLayout {
     public ProductListItemView bind(FeaturedProduct featuredProduct) {
         mFeaturedProduct = featuredProduct;
         Glide.with(this)
-                .load(StringUtils.cleanUrl(featuredProduct.getThumb()))
+                .load(StringUtils.fixUrl(featuredProduct.getThumb()))
                 .into(mProductImage);
         mProductName.setText(mFeaturedProduct.getName());
         mProductPrice.setText(mFeaturedProduct.getPriceExcludingTaxFormatted());
