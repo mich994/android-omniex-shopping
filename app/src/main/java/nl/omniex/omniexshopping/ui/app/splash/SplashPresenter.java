@@ -28,7 +28,6 @@ public class SplashPresenter extends BasePresenter<SplashView> {
             getAccessToken();
         else
             refreshAccessToken();
-
     }
 
     private void getAccessToken() {

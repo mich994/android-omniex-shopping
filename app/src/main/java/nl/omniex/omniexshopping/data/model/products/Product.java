@@ -60,7 +60,7 @@ public class Product {
     private String mViewed;
     @SerializedName("weight_class")
     private String mWeightClass;
-    @SerializedName("lenght_class")
+    @SerializedName("length_class")
     private String mLenghtClass;
     @SerializedName("reward")
     private String mReward;

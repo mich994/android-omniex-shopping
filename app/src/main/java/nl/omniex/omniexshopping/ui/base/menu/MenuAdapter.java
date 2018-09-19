@@ -16,7 +16,7 @@ public class MenuAdapter extends BaseMenuAdapter<MenuItem, MenuView> {
 
     @Override
     protected MenuView createRowView(MenuItem menuItem, Context context, int position) {
-        return MenuView_.build(context).bind(menuItem);
+        return MenuView_.build(context).bind(menuItem).setSelectedBg(isSelected(position));
     }
 
     @Override

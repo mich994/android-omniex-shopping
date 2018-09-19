@@ -45,7 +45,7 @@ public class CustomToolbar {
 
     public CustomToolbar setIconEnd(int resId){
         mIconEnd.setVisibility(View.VISIBLE);
-        mIconStart.setImageResource(resId);
+        mIconEnd.setImageResource(resId);
         return this;
     }
 
