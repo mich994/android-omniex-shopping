@@ -61,9 +61,13 @@ public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V
         super.onAttach(context);
         if ((context instanceof BaseActivity))
             mBaseActivity = (BaseActivity) getActivity();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
         if (mBaseActivity != null && mBaseActivity.getCustomToolbar() != null) {
-            //reset toolbar
+            setToolbarIconMenuActivity();
         }
     }
 

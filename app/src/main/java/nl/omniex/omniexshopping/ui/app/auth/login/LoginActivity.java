@@ -58,4 +58,5 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
         finish();
         MainMenuActivity_.intent(this).start();
     }
+
 }

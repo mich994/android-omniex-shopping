@@ -23,7 +23,7 @@ import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.ui.views.toolbar.CustomToolbar;
 
 @EActivity
-public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V>> extends MvpActivity<V, P> {
+public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V>> extends MvpActivity<V, P> implements BaseView {
 
     @Bean
     protected CustomToolbar mCustomToolbar;
@@ -59,11 +59,12 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        if(savedInstanceState==null)
+        if (savedInstanceState == null)
             onFirstCreate();
     }
 
-    protected void onFirstCreate(){}
+    protected void onFirstCreate() {
+    }
 
     public CustomToolbar getCustomToolbar() {
         return mCustomToolbar;

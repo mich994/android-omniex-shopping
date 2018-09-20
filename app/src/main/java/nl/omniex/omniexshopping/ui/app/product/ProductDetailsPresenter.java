@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
+import nl.omniex.omniexshopping.data.repository.CartRepository;
 import nl.omniex.omniexshopping.data.repository.ProductsRepository;
 import nl.omniex.omniexshopping.ui.base.BasePresenter;
 import timber.log.Timber;
@@ -11,10 +13,12 @@ import timber.log.Timber;
 public class ProductDetailsPresenter extends BasePresenter<ProductDetailsView> {
 
     private ProductsRepository mProductsRepository;
+    private CartRepository mCartRepository;
 
     @Inject
-    ProductDetailsPresenter(ProductsRepository productsRepository) {
+    ProductDetailsPresenter(ProductsRepository productsRepository, CartRepository cartRepository) {
         mProductsRepository = productsRepository;
+        mCartRepository = cartRepository;
     }
 
     void getProductDetails(Integer id) {
@@ -29,6 +33,18 @@ public class ProductDetailsPresenter extends BasePresenter<ProductDetailsView> {
                         error -> {
                             error.printStackTrace();
                             Timber.e(error);
+                        }));
+    }
+
+    void addToCart(AddToCartModel addToCartModel) {
+        addDisposable(mCartRepository
+                .addToCart(addToCartModel)
+                .subscribe(
+                        (voidResponse) -> {
+
+                        },
+                        error -> {
+
                         }));
     }
 }

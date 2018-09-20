@@ -7,20 +7,21 @@ import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator;
 import nl.omniex.omniexshopping.R;
+import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
 import nl.omniex.omniexshopping.data.model.products.Product;
 import nl.omniex.omniexshopping.ui.adapters.DetailsImagePagerAdapter;
-import nl.omniex.omniexshopping.ui.base.BaseActivity;
+import nl.omniex.omniexshopping.ui.base.BaseFragment;
 
-@EActivity(R.layout.activity_product_details)
-public class ProductDetailsActivity extends BaseActivity<ProductDetailsView, ProductDetailsPresenter> implements ProductDetailsView {
+@EFragment(R.layout.fragment_product_details)
+public class ProductDetailsFragment extends BaseFragment<ProductDetailsView, ProductDetailsPresenter> implements ProductDetailsView {
 
     @ViewById(R.id.product_details_images_vp)
     ViewPager mDetailsImagesVp;
@@ -37,21 +38,11 @@ public class ProductDetailsActivity extends BaseActivity<ProductDetailsView, Pro
     @ViewById(R.id.product_details_description_tv)
     TextView mDescriptionTv;
 
-    @Extra
+    @FragmentArg
     Integer mProductId;
 
     private DetailsImagePagerAdapter mDetailsImagePagerAdapter;
     private int mQuantity = 1;
-
-    @Override
-    protected void onFirstCreate() {
-        super.onFirstCreate();
-        getCustomToolbar()
-                .setIconStart(R.drawable.twotone_arrow_back_black_36)
-                .setIconEnd(R.drawable.twotone_shopping_cart_black_36)
-                .setIconStarClickListener(this::finish)
-                .setIconEndClickListener(()->{});
-    }
 
     @AfterViews
     void initializeDetails() {
@@ -59,7 +50,7 @@ public class ProductDetailsActivity extends BaseActivity<ProductDetailsView, Pro
     }
 
     private void initViewPager(List<String> imagesUrl){
-        mDetailsImagePagerAdapter = new DetailsImagePagerAdapter(getSupportFragmentManager(), imagesUrl);
+        mDetailsImagePagerAdapter = new DetailsImagePagerAdapter(getFragmentManager(), imagesUrl);
         mDetailsImagesVp.setAdapter(mDetailsImagePagerAdapter);
         mCircleIndicator.setViewPager(mDetailsImagesVp);
     }
@@ -68,6 +59,7 @@ public class ProductDetailsActivity extends BaseActivity<ProductDetailsView, Pro
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.product_details_add_to_cart_btn:
+                getPresenter().addToCart(new AddToCartModel(String.valueOf(mProductId), String.valueOf(mQuantity)));
                 break;
             case R.id.product_details_quantity_add:
                 handleQuantity(true);

@@ -3,7 +3,9 @@ package nl.omniex.omniexshopping.data.api;
 import io.reactivex.Single;
 import nl.omniex.omniexshopping.data.model.auth.Login;
 import nl.omniex.omniexshopping.data.model.auth.OldToken;
+import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
 import nl.omniex.omniexshopping.data.model.response.AccessTokenResponse;
+import nl.omniex.omniexshopping.data.model.response.CartResponse;
 import nl.omniex.omniexshopping.data.model.response.CategoriesResponse;
 import nl.omniex.omniexshopping.data.model.response.FeaturedProductsResponse;
 import nl.omniex.omniexshopping.data.model.response.LoginResponse;
@@ -71,6 +73,17 @@ public interface OmniexApi {
     Single<Response<ProductResponse>> getProductDetails(
             @Header("Authorization") String accessToken,
             @Query("id") Integer id
+    );
+
+    @POST("index.php?route=rest/cart/cart")
+    Single<Response<Void>> addToCart(
+            @Header("Authorization") String accessToken,
+            @Body AddToCartModel addToCartModel
+    );
+
+    @GET("index.php?route=rest/cart/cart")
+    Single<Response<CartResponse>> getCart(
+            @Header("Authorization") String accessToken
     );
 }
 

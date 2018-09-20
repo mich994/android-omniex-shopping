@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.data.model.products.FeaturedProduct;
 import nl.omniex.omniexshopping.ui.adapters.FeatureProductsAdapter;
-import nl.omniex.omniexshopping.ui.app.product.ProductDetailsActivity_;
+import nl.omniex.omniexshopping.ui.app.product.ProductDetailsFragment_;
 import nl.omniex.omniexshopping.ui.base.BaseFragment;
 import nl.omniex.omniexshopping.ui.base.BaseRecyclerAdapter;
 
@@ -40,8 +40,6 @@ public class HomeFragment extends BaseFragment<HomeView, HomePresenter> implemen
 
     @Override
     public void onItemClick(FeaturedProduct featuredProduct) {
-        ProductDetailsActivity_.intent(this)
-                .mProductId(featuredProduct.getProductId())
-                .start();
+        goToFragment(ProductDetailsFragment_.builder().mProductId(featuredProduct.getProductId()).build(), true);
     }
 }
