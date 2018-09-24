@@ -12,6 +12,8 @@ import nl.omniex.omniexshopping.ui.adapters.FeatureProductsAdapter;
 import nl.omniex.omniexshopping.ui.adapters.FeatureProductsAdapter_;
 import nl.omniex.omniexshopping.ui.adapters.ProductDetailsImageAdapter;
 import nl.omniex.omniexshopping.ui.adapters.ProductDetailsImageAdapter_;
+import nl.omniex.omniexshopping.ui.adapters.ProductsListAdapter;
+import nl.omniex.omniexshopping.ui.adapters.ProductsListAdapter_;
 
 @Module
 public class AdaptersModule {
@@ -34,5 +36,10 @@ public class AdaptersModule {
     @Provides
     CartAdapter provideCartAdapter(Context context){
         return CartAdapter_.getInstance_(context);
+    }
+
+    @Provides
+    ProductsListAdapter provideProductsListAdapter(Context context){
+        return ProductsListAdapter_.getInstance_(context);
     }
 }

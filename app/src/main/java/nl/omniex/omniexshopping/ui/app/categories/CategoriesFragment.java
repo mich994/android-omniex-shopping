@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.data.model.products.Category;
 import nl.omniex.omniexshopping.ui.adapters.CategoriesAdapter;
+import nl.omniex.omniexshopping.ui.app.product.list.ProductsListFragment_;
 import nl.omniex.omniexshopping.ui.base.BaseFragment;
 import nl.omniex.omniexshopping.ui.base.BaseRecyclerAdapter;
 
@@ -41,6 +42,6 @@ public class CategoriesFragment extends BaseFragment<CategoriesView, CategoriesP
 
     @Override
     public void onItemClick(Category category) {
-
+        goToFragment(ProductsListFragment_.builder().mCategoryId(category.getCategoryId()).build(), true);
     }
 }

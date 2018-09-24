@@ -36,8 +36,6 @@ public class MainMenuPresenter extends BasePresenter<MainMenuView> {
                 .subscribe(
                         cartResponse ->
                         {
-                            hashCode();
-
                             ifViewAttached(view -> view.onCartFetched(cartResponse.body().getCart()));
                         },
                         error -> {

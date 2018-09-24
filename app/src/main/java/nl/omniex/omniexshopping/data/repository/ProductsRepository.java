@@ -9,6 +9,7 @@ import nl.omniex.omniexshopping.data.api.OmniexApi;
 import nl.omniex.omniexshopping.data.model.response.CategoriesResponse;
 import nl.omniex.omniexshopping.data.model.response.FeaturedProductsResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductResponse;
+import nl.omniex.omniexshopping.data.model.response.ProductsListResponse;
 import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 import retrofit2.Response;
 
@@ -37,9 +38,9 @@ public class ProductsRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Response<Void>> getProductsByCat(){
+    public Single<Response<ProductsListResponse>> getProductsByCat(Integer catId){
         return mOmniexApi
-                .getProductsByCat(mSharedPrefUtils.getAccessToken(), 33)
+                .getProductsByCat(mSharedPrefUtils.getAccessToken(), catId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
