@@ -1,8 +1,8 @@
-package nl.omniex.omniexshopping.data.model.user;
+package nl.omniex.omniexshopping.data.model.address;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Address {
+public class AddAddress {
 
     @SerializedName("firstname")
     private String mFirstName;
@@ -25,14 +25,17 @@ public class Address {
     @SerializedName("default")
     private Integer mDefault;
 
-    public Address(String firstName, String lastName, String city, String addressOne, String addressTwo, String postcode, String company) {
+    public AddAddress(String firstName, String lastName, String city, String addressOne, String addressTwo, String countryId, String postcode, String zoneId, String company) {
         mFirstName = firstName;
         mLastName = lastName;
         mCity = city;
         mAddressOne = addressOne;
         mAddressTwo = addressTwo;
+        mCountryId = countryId;
         mPostcode = postcode;
+        mZoneId = zoneId;
         mCompany = company;
+        mDefault = 0;
     }
 
     public String getFirstName() {

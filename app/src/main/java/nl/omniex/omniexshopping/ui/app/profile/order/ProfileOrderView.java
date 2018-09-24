@@ -1,4 +1,6 @@
 package nl.omniex.omniexshopping.ui.app.profile.order;
 
-public class ProfileOrderView {
+import nl.omniex.omniexshopping.ui.base.BaseView;
+
+public interface ProfileOrderView extends BaseView {
 }

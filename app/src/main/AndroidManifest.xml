@@ -42,7 +42,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.app.product.ProductDetailsFragment_"
+            android:name=".ui.app.profile.address.edit.EditAddressActivity_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 

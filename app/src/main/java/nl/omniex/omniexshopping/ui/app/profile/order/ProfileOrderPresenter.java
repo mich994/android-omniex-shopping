@@ -1,4 +1,11 @@
 package nl.omniex.omniexshopping.ui.app.profile.order;
 
-public class ProfileOrderPresenter {
+import javax.inject.Inject;
+
+import nl.omniex.omniexshopping.ui.base.BasePresenter;
+
+public class ProfileOrderPresenter extends BasePresenter<ProfileOrderView> {
+
+    @Inject
+    ProfileOrderPresenter(){}
 }

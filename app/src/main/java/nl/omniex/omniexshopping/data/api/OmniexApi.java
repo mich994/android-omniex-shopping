@@ -5,14 +5,17 @@ import nl.omniex.omniexshopping.data.model.auth.Login;
 import nl.omniex.omniexshopping.data.model.auth.OldToken;
 import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
 import nl.omniex.omniexshopping.data.model.response.AccessTokenResponse;
+import nl.omniex.omniexshopping.data.model.response.AddressListResponse;
 import nl.omniex.omniexshopping.data.model.response.CartResponse;
 import nl.omniex.omniexshopping.data.model.response.CategoriesResponse;
+import nl.omniex.omniexshopping.data.model.response.CountryResponse;
 import nl.omniex.omniexshopping.data.model.response.FeaturedProductsResponse;
 import nl.omniex.omniexshopping.data.model.response.LoginResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductsListResponse;
+import nl.omniex.omniexshopping.data.model.response.ZoneResponse;
 import nl.omniex.omniexshopping.data.model.shipping.ShippingQuote;
-import nl.omniex.omniexshopping.data.model.user.Address;
+import nl.omniex.omniexshopping.data.model.address.AddAddress;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -113,14 +116,14 @@ public interface OmniexApi {
 
     //region ADDRESS
     @GET("index.php?route=rest/account/address")
-    Single<Response<Void>> getAddressList(
+    Single<Response<AddressListResponse>> getAddressList(
             @Header("Authorization") String accessToken
     );
 
     @POST("index.php?route=rest/account/address")
     Single<Response<Void>> addNewAddress(
             @Header("Authorization") String accessToken,
-            @Body Address address
+            @Body AddAddress addAddress
     );
 
     @GET("index.php?route=rest/account/address")
@@ -133,7 +136,7 @@ public interface OmniexApi {
     Single<Response<Void>> editAddress(
             @Header("Authorization") String accessToken,
             @Query("id") Integer id,
-            @Body Address address
+            @Body AddAddress addAddress
     );
 
     @DELETE("index.php?route=rest/account/address")
@@ -175,12 +178,12 @@ public interface OmniexApi {
 
     //region COUNTRIES
     @GET("index.php?route=feed/rest_api/countries")
-    Single<Response<Void>> getCountries(
+    Single<Response<CountryResponse>> getCountries(
             @Header("Authorization") String accessToken
     );
 
     @GET("index.php?route=feed/rest_api/countries")
-    Single<Response<Void>> getZones(
+    Single<Response<ZoneResponse>> getZones(
             @Header("Authorization") String accessToken,
             @Query("id") Integer id
     );

@@ -43,7 +43,7 @@
         <item name="android:fontFamily">@font/roboto_bold</item>
         <item name="android:textSize">@dimen/text_size_sixteen</item>
         <item name="android:background">@drawable/background_login_edit_text</item>
-        <item name="android:padding">@dimen/margin_small</item>
+        <item name="android:padding">@dimen/margin_medium</item>
     </style>
 
     <style name="RegisterDivider">

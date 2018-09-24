@@ -44,7 +44,6 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     protected void onFirstCreate() {
         super.onFirstCreate();
         setToolbar();
-
     }
 
     private void setToolbar(){
