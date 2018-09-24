@@ -99,5 +99,5 @@ dependencies {
     //Flexbox
     implementation 'com.google.android:flexbox:1.0.0'
 
-    implementation 'cz.intik:overflow-pager-indicator:1.2.1'
+    implementation 'me.relex:circleindicator:1.2.2@aar'
 }

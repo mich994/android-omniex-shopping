@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="@dimen/margin_medium"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/margin_big"
+    android:orientation="vertical">
+
+    <TextView
+        android:textSize="@dimen/text_size_twenty"
+        android:fontFamily="@font/roboto_bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CART:" />
+
+    <android.support.v7.widget.RecyclerView
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:id="@+id/cart_dialog_items_rv"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Total:"
+            android:textSize="@dimen/text_size_eighteen" />
+
+        <TextView
+            android:id="@+id/cart_dialog_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:fontFamily="@font/roboto_light"
+            android:text="324324.54$"
+            android:textSize="@dimen/text_size_eighteen" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/cart_dialog_make_order_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MAKE ORDER" />
+
+        <Button
+            android:id="@+id/cart_dialog_continue_btn"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Continue Shopping" />
+    </LinearLayout>
+
+</LinearLayout>

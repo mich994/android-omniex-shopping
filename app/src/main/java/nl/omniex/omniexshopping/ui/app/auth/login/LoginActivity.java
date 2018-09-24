@@ -24,7 +24,6 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
 
     @AfterViews
     void setTempCredentials(){
-        getPresenter().logout();
         mEmailInput.setText("michlip994@gmail.com");
         mPasswordInput.setText("micho994");
     }
@@ -59,4 +58,5 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
         finish();
         MainMenuActivity_.intent(this).start();
     }
+
 }

@@ -1,22 +1,24 @@
 package nl.omniex.omniexshopping.ui.app.product;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
+import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
+import nl.omniex.omniexshopping.data.repository.CartRepository;
 import nl.omniex.omniexshopping.data.repository.ProductsRepository;
 import nl.omniex.omniexshopping.ui.base.BasePresenter;
-import nl.omniex.omniexshopping.utils.StringUtils;
 import timber.log.Timber;
 
 public class ProductDetailsPresenter extends BasePresenter<ProductDetailsView> {
 
     private ProductsRepository mProductsRepository;
+    private CartRepository mCartRepository;
 
     @Inject
-    ProductDetailsPresenter(ProductsRepository productsRepository) {
+    ProductDetailsPresenter(ProductsRepository productsRepository, CartRepository cartRepository) {
         mProductsRepository = productsRepository;
+        mCartRepository = cartRepository;
     }
 
     void getProductDetails(Integer id) {
@@ -25,7 +27,7 @@ public class ProductDetailsPresenter extends BasePresenter<ProductDetailsView> {
                 .subscribe(
                         productResponse -> {
                             if (productResponse.isSuccessful() && productResponse.code() == 200) {
-                                ifViewAttached(view -> view.onDetailsFetched(fixImageUrl(productResponse.body().getProduct().getImageUrlsList())));
+                                ifViewAttached(view -> view.onDetailsFetched(Objects.requireNonNull(productResponse.body()).getProduct()));
                             }
                         },
                         error -> {
@@ -34,11 +36,15 @@ public class ProductDetailsPresenter extends BasePresenter<ProductDetailsView> {
                         }));
     }
 
-    private List<String> fixImageUrl(List<String> imageUrls) {
-        List<String> fixedImageUrls = new ArrayList<>();
-        for (String url : imageUrls) {
-            fixedImageUrls.add(StringUtils.cleanUrl(url));
-        }
-        return fixedImageUrls;
+    void addToCart(AddToCartModel addToCartModel) {
+        addDisposable(mCartRepository
+                .addToCart(addToCartModel)
+                .subscribe(
+                        (voidResponse) -> {
+
+                        },
+                        error -> {
+
+                        }));
     }
 }

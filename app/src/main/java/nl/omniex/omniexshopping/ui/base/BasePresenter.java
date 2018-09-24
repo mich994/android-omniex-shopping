@@ -5,11 +5,11 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public class BasePresenter<V extends BaseView> extends MvpBasePresenter<V> {
+public abstract class BasePresenter<V extends BaseView> extends MvpBasePresenter<V> {
 
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
-    public void addDisposable(Disposable disposable) {
+    protected void addDisposable(Disposable disposable) {
         mCompositeDisposable.add(disposable);
     }
 
