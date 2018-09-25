@@ -15,13 +15,15 @@ import nl.omniex.omniexshopping.data.model.cart.Cart;
 import nl.omniex.omniexshopping.ui.app.auth.StartActivity_;
 import nl.omniex.omniexshopping.ui.app.categories.CategoriesFragment_;
 import nl.omniex.omniexshopping.ui.app.main.home.HomeFragment_;
+import nl.omniex.omniexshopping.ui.app.order.OrderActivity_;
+import nl.omniex.omniexshopping.ui.app.profile.ProfileFragment_;
 import nl.omniex.omniexshopping.ui.base.menu.BaseMenuActivity;
 import nl.omniex.omniexshopping.ui.base.menu.MenuAdapter;
 import nl.omniex.omniexshopping.ui.views.dialogs.cart.CartDialog;
 import nl.omniex.omniexshopping.ui.views.dialogs.cart.CartDialog_;
 
 @EActivity(R.layout.activity_main_menu)
-public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView, MainMenuPresenter> implements MainMenuView, CartDialog.OnUpdateItemQuantityListener {
+public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView, MainMenuPresenter> implements MainMenuView, CartDialog.OnUpdateItemQuantityListener, CartDialog.OnMakeOrderClickListener {
 
     @ViewById(R.id.duo_view_menu_background)
     ImageView mDuoDrawerLayout;
@@ -64,21 +66,21 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
             MenuItem menuItem = (MenuItem) objectClicked;
             switch (position) {
                 case 0:
-                    goToFragment(HomeFragment_.builder().build(), true, "");
+                    goToFragment(HomeFragment_.builder().build(), false, "");
                     break;
                 case 1:
                     showToastMessage(menuItem.getTitle(), 0);
                     break;
                 case 2:
-                    goToFragment(CategoriesFragment_.builder().build(), true, "");
+                    goToFragment(CategoriesFragment_.builder().build(), false, "");
                     break;
                 case 3:
-                    showToastMessage(menuItem.getTitle(), 0);
+                    goToFragment(ProfileFragment_.builder().build(), false,"");
                     break;
                 case 4:
                     showToastMessage(menuItem.getTitle(), 0);
                     break;
-                case 8:
+                case 6:
                     getPresenter().logout();
                     break;
             }
@@ -91,9 +93,7 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
         menuItems.add(new MenuItem("Featured Products"));
         menuItems.add(new MenuItem("Bestsellers"));
         menuItems.add(new MenuItem("Products"));
-        menuItems.add(new MenuItem("Profile Details"));
-        menuItems.add(new MenuItem("Order History"));
-        menuItems.add(new MenuItem("Shipping Methods"));
+        menuItems.add(new MenuItem("Profile"));
         menuItems.add(new MenuItem("Newsletter"));
         menuItems.add(new MenuItem("About Omniex"));
         menuItems.add(new MenuItem("Logout"));
@@ -114,7 +114,12 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
 
     @Override
     public void onCartFetched(Cart cart) {
-        CartDialog_.builder().mCart(cart).build().setOnUpdateItemQuantityListener(this).show(getSupportFragmentManager(), "dialog");
+        CartDialog_.builder().mCart(cart).build().setOnUpdateItemQuantityListener(this).setOnMakeOrderClickListener(this).show(getSupportFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void onMakeOrderClick() {
+        OrderActivity_.intent(this).start();
     }
 
     @Override

@@ -16,23 +16,17 @@
             android:layout_margin="@dimen/margin_medium"
             android:orientation="vertical">
 
-
-
             <EditText
                 android:id="@+id/register_input_email"
                 style="@style/RegisterInputEditText"
                 android:hint="@string/login_email"
                 android:inputType="textEmailAddress" />
 
-
-
             <EditText
                 android:id="@+id/register_input_password"
                 style="@style/RegisterInputEditText"
                 android:hint="Password"
                 android:inputType="textPassword|numberPassword" />
-
-
 
             <EditText
                 android:id="@+id/register_input_confirm_password"
@@ -42,14 +36,11 @@
 
             <View style="@style/RegisterDivider" />
 
-
-
             <EditText
                 android:id="@+id/register_input_first_name"
                 style="@style/RegisterInputEditText"
                 android:hint="First name"
                 android:inputType="textCapWords" />
-
 
             <EditText
                 android:id="@+id/register_input_last_name"
@@ -58,8 +49,6 @@
                 android:inputType="textCapWords" />
 
             <View style="@style/RegisterDivider" />
-
-
 
             <EditText
                 android:id="@+id/register_input_company_name"
@@ -71,18 +60,14 @@
             <EditText
                 android:id="@+id/register_input_company_address"
                 style="@style/RegisterInputEditText"
-                android:hint="Company address"
+                android:hint="Company addAddress"
                 android:inputType="textCapWords" />
-
-
 
             <EditText
                 android:id="@+id/register_input_country"
                 style="@style/RegisterInputEditText"
                 android:hint="Country"
                 android:inputType="textCapWords" />
-
-
 
             <EditText
                 android:id="@+id/register_input_city"

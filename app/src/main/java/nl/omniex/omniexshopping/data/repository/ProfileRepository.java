@@ -35,14 +35,4 @@ public class ProfileRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
-
-    public Single<Response<Void>> getAddressList() {
-        return mOmniexApi
-                .getAddressList(mSharedPrefUtils.getAccessToken())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-
-
 }
