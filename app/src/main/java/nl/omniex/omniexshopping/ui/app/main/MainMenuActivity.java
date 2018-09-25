@@ -15,6 +15,7 @@ import nl.omniex.omniexshopping.data.model.cart.Cart;
 import nl.omniex.omniexshopping.ui.app.auth.StartActivity_;
 import nl.omniex.omniexshopping.ui.app.categories.CategoriesFragment_;
 import nl.omniex.omniexshopping.ui.app.main.home.HomeFragment_;
+import nl.omniex.omniexshopping.ui.app.order.OrderActivity_;
 import nl.omniex.omniexshopping.ui.app.profile.ProfileFragment_;
 import nl.omniex.omniexshopping.ui.base.menu.BaseMenuActivity;
 import nl.omniex.omniexshopping.ui.base.menu.MenuAdapter;
@@ -22,7 +23,7 @@ import nl.omniex.omniexshopping.ui.views.dialogs.cart.CartDialog;
 import nl.omniex.omniexshopping.ui.views.dialogs.cart.CartDialog_;
 
 @EActivity(R.layout.activity_main_menu)
-public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView, MainMenuPresenter> implements MainMenuView, CartDialog.OnUpdateItemQuantityListener {
+public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView, MainMenuPresenter> implements MainMenuView, CartDialog.OnUpdateItemQuantityListener, CartDialog.OnMakeOrderClickListener {
 
     @ViewById(R.id.duo_view_menu_background)
     ImageView mDuoDrawerLayout;
@@ -113,7 +114,12 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
 
     @Override
     public void onCartFetched(Cart cart) {
-        CartDialog_.builder().mCart(cart).build().setOnUpdateItemQuantityListener(this).show(getSupportFragmentManager(), "dialog");
+        CartDialog_.builder().mCart(cart).build().setOnUpdateItemQuantityListener(this).setOnMakeOrderClickListener(this).show(getSupportFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void onMakeOrderClick() {
+        OrderActivity_.intent(this).start();
     }
 
     @Override

@@ -35,4 +35,11 @@ public class CartRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Single<Response<Void>> emptyCart(){
+        return mOmniexApi
+                .emptyCart(mSharedPrefUtils.getAccessToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

@@ -7,17 +7,20 @@ import javax.inject.Inject;
 import nl.omniex.omniexshopping.data.model.address.AddAddress;
 import nl.omniex.omniexshopping.data.repository.AddressRepository;
 import nl.omniex.omniexshopping.data.repository.CountriesRepository;
+import nl.omniex.omniexshopping.data.repository.ShippingRepository;
 import nl.omniex.omniexshopping.ui.base.BasePresenter;
 
 public class EditAddressPresenter extends BasePresenter<EditAddressView> {
 
     private AddressRepository mAddressRepository;
     private CountriesRepository mCountriesRepository;
+    private ShippingRepository mShippingRepository;
 
     @Inject
-    EditAddressPresenter(AddressRepository addressRepository, CountriesRepository countriesRepository) {
+    EditAddressPresenter(AddressRepository addressRepository, CountriesRepository countriesRepository, ShippingRepository shippingRepository) {
         mAddressRepository = addressRepository;
         mCountriesRepository = countriesRepository;
+        mShippingRepository = shippingRepository;
     }
 
     void saveAddress(AddAddress addAddress) {

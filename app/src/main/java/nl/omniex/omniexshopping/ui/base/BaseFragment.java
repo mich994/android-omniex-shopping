@@ -82,16 +82,20 @@ public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V
     }
 
     protected void setToolbarIconMenuActivity() {
-        mBaseMenuActivity = (BaseMenuActivity) getActivity();
-        if (mBaseMenuActivity.getSupportFragmentManager().getBackStackEntryCount() > 1)
-            mBaseActivity.getCustomToolbar()
-                    .setIconStart(R.drawable.twotone_arrow_back_black_36)
-                    .setIconStarClickListener(() -> mBaseMenuActivity.getSupportFragmentManager().popBackStack());
-        else
-            mBaseActivity.getCustomToolbar()
-                    .setIconStart(R.drawable.twotone_menu_black_36)
-                    .setIconStarClickListener(() -> mBaseMenuActivity.toggleMenu());
-    }
+        try {
+            mBaseMenuActivity = (BaseMenuActivity) getActivity();
+            if (mBaseMenuActivity.getSupportFragmentManager().getBackStackEntryCount() > 1)
+                mBaseActivity.getCustomToolbar()
+                        .setIconStart(R.drawable.twotone_arrow_back_black_36)
+                        .setIconStarClickListener(() -> mBaseMenuActivity.getSupportFragmentManager().popBackStack());
+            else
+                mBaseActivity.getCustomToolbar()
+                        .setIconStart(R.drawable.twotone_menu_black_36)
+                        .setIconStarClickListener(() -> mBaseMenuActivity.toggleMenu());
+        }catch (ClassCastException e){
+
+        }
+        }
 
     protected BaseActivity getBaseActivity() {
         return mBaseActivity;

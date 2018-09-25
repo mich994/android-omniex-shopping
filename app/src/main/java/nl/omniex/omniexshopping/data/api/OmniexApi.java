@@ -1,9 +1,13 @@
 package nl.omniex.omniexshopping.data.api;
 
 import io.reactivex.Single;
+import nl.omniex.omniexshopping.data.model.address.AddAddress;
+import nl.omniex.omniexshopping.data.model.address.Address;
 import nl.omniex.omniexshopping.data.model.auth.Login;
 import nl.omniex.omniexshopping.data.model.auth.OldToken;
 import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
+import nl.omniex.omniexshopping.data.model.order.ExistingAddress;
+import nl.omniex.omniexshopping.data.model.order.OrderAddress;
 import nl.omniex.omniexshopping.data.model.response.AccessTokenResponse;
 import nl.omniex.omniexshopping.data.model.response.AddressListResponse;
 import nl.omniex.omniexshopping.data.model.response.CartResponse;
@@ -13,9 +17,9 @@ import nl.omniex.omniexshopping.data.model.response.FeaturedProductsResponse;
 import nl.omniex.omniexshopping.data.model.response.LoginResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductsListResponse;
+import nl.omniex.omniexshopping.data.model.response.ShippingAddressesResponse;
 import nl.omniex.omniexshopping.data.model.response.ZoneResponse;
 import nl.omniex.omniexshopping.data.model.shipping.ShippingQuote;
-import nl.omniex.omniexshopping.data.model.address.AddAddress;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -93,6 +97,11 @@ public interface OmniexApi {
     Single<Response<CartResponse>> getCart(
             @Header("Authorization") String accessToken
     );
+
+    @DELETE("index.php?route=rest/cart/emptycart")
+    Single<Response<Void>> emptyCart(
+            @Header("Authorization") String accessToken
+    );
     //endregion
 
     //region SHIPPING
@@ -111,6 +120,23 @@ public interface OmniexApi {
     Single<Response<Void>> saveShippingQuote(
             @Header("Authorization") String accessToken,
             @Query("id") String id
+    );
+
+    @GET("index.php?route=rest/shipping_address/shippingaddress")
+    Single<Response<ShippingAddressesResponse>> getShippingAddresses(
+            @Header("Authorization") String accessToken
+    );
+
+    @POST("index.php?route=rest/shipping_address/shippingaddress")
+    Single<Response<Void>> addNewShippingAddress(
+            @Header("Authorization") String accessToken,
+            @Body OrderAddress orderAddress
+    );
+
+    @POST("index.php?route=rest/shipping_address/shippingaddress/existing")
+    Single<Response<Void>> setExisitingShippingAddress(
+            @Header("Authorization") String accessToken,
+            @Body Address existingAddress
     );
     //endregion
 
@@ -174,6 +200,27 @@ public interface OmniexApi {
     Single<Response<Void>> simpleConfirmSave(
             @Header("Authorization") String accessToken
     );
+    //endregion
+
+    //region PAYMENTS
+
+    @GET("index.php?route=rest/payment_address/paymentaddress")
+    Single<Response<Void>> getPaymentAdresses(
+            @Header("Authorization") String accessToken
+    );
+
+    @POST("index.php?route=rest/payment_address/paymentaddress")
+    Single<Response<Void>> addNewPaymentAddress(
+            @Header("Authorization") String accessToken,
+            @Body OrderAddress orderAddress
+    );
+
+    @POST("index.php?route=rest/payment_address/paymentaddress")
+    Single<Response<Void>> setExisitingPaymentAddress(
+            @Header("Authorization") String accessToken,
+            @Query("existing") ExistingAddress existingAddress
+    );
+
     //endregion
 
     //region COUNTRIES

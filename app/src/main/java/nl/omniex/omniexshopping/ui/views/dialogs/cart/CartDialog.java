@@ -36,6 +36,7 @@ public class CartDialog extends DialogFragment implements CartAdapter.OnCartItem
     Cart mCart;
 
     private OnUpdateItemQuantityListener mOnUpdateItemQuantityListener;
+    private OnMakeOrderClickListener mOnMakeOrderClickListener;
 
     @Override
     public void onResume() {
@@ -71,8 +72,14 @@ public class CartDialog extends DialogFragment implements CartAdapter.OnCartItem
                 dismiss();
                 break;
             case R.id.cart_dialog_make_order_btn:
+                mOnMakeOrderClickListener.onMakeOrderClick();
                 break;
         }
+    }
+
+    public CartDialog setOnMakeOrderClickListener(OnMakeOrderClickListener onMakeOrderClickListener) {
+        mOnMakeOrderClickListener = onMakeOrderClickListener;
+        return this;
     }
 
     public CartDialog setOnUpdateItemQuantityListener(OnUpdateItemQuantityListener onUpdateItemQuantityListener) {
@@ -83,6 +90,10 @@ public class CartDialog extends DialogFragment implements CartAdapter.OnCartItem
     @Override
     public void onUpdateItemQuantity(int productId, int quantity) {
 
+    }
+
+    public interface OnMakeOrderClickListener{
+        void onMakeOrderClick();
     }
 
     public interface OnUpdateItemQuantityListener {
