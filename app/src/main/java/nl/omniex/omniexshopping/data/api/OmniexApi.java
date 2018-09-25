@@ -6,7 +6,6 @@ import nl.omniex.omniexshopping.data.model.address.Address;
 import nl.omniex.omniexshopping.data.model.auth.Login;
 import nl.omniex.omniexshopping.data.model.auth.OldToken;
 import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
-import nl.omniex.omniexshopping.data.model.order.ExistingAddress;
 import nl.omniex.omniexshopping.data.model.order.OrderAddress;
 import nl.omniex.omniexshopping.data.model.response.AccessTokenResponse;
 import nl.omniex.omniexshopping.data.model.response.AddressListResponse;
@@ -17,7 +16,7 @@ import nl.omniex.omniexshopping.data.model.response.FeaturedProductsResponse;
 import nl.omniex.omniexshopping.data.model.response.LoginResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductsListResponse;
-import nl.omniex.omniexshopping.data.model.response.ShippingAddressesResponse;
+import nl.omniex.omniexshopping.data.model.response.OrderAddressesResponse;
 import nl.omniex.omniexshopping.data.model.response.ZoneResponse;
 import nl.omniex.omniexshopping.data.model.shipping.ShippingQuote;
 import retrofit2.Response;
@@ -123,7 +122,7 @@ public interface OmniexApi {
     );
 
     @GET("index.php?route=rest/shipping_address/shippingaddress")
-    Single<Response<ShippingAddressesResponse>> getShippingAddresses(
+    Single<Response<OrderAddressesResponse>> getShippingAddresses(
             @Header("Authorization") String accessToken
     );
 
@@ -205,7 +204,7 @@ public interface OmniexApi {
     //region PAYMENTS
 
     @GET("index.php?route=rest/payment_address/paymentaddress")
-    Single<Response<Void>> getPaymentAdresses(
+    Single<Response<OrderAddressesResponse>> getPaymentAdresses(
             @Header("Authorization") String accessToken
     );
 
@@ -215,10 +214,10 @@ public interface OmniexApi {
             @Body OrderAddress orderAddress
     );
 
-    @POST("index.php?route=rest/payment_address/paymentaddress")
+    @POST("index.php?route=rest/payment_address/paymentaddress/existing")
     Single<Response<Void>> setExisitingPaymentAddress(
             @Header("Authorization") String accessToken,
-            @Query("existing") ExistingAddress existingAddress
+            @Body Address existingAddress
     );
 
     //endregion

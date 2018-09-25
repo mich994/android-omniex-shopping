@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import nl.omniex.omniexshopping.data.model.shipping.ShippingAddressList;
 
-public class ShippingAddressesResponse {
+public class OrderAddressesResponse {
 
     @SerializedName("data")
     private ShippingAddressList mShippingAddressList;

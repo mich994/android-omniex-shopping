@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.data.model.address.Address;
 import nl.omniex.omniexshopping.ui.adapters.OrderAddressesAdapter;
+import nl.omniex.omniexshopping.ui.app.order.shipping.method.OrderShippingMethodFragment_;
 import nl.omniex.omniexshopping.ui.app.profile.address.edit.EditAddressActivity_;
 import nl.omniex.omniexshopping.ui.base.BaseFragment;
 import nl.omniex.omniexshopping.ui.base.BaseRecyclerAdapter;
@@ -36,6 +37,8 @@ public class OrderPaymentFragment extends BaseFragment<OrderPaymentView, OrderPa
     @Inject
     OrderAddressesAdapter mOrderAddressesAdapter;
 
+    private Address mSelectedAddress;
+
     @Override
     public void onResume() {
         super.onResume();
@@ -52,8 +55,12 @@ public class OrderPaymentFragment extends BaseFragment<OrderPaymentView, OrderPa
 
     @Click({R.id.order_payment_empty_tv, R.id.order_payment_next_btn})
     void onClick(View v){
-        if(v.getId()==R.id.order_shipping_empty_tv)
+        if(v.getId()==R.id.order_payment_empty_tv)
             EditAddressActivity_.intent(getActivity()).mIsNewAddress(true).start();
+        else if (v.getId() == R.id.order_payment_next_btn) {
+            if (mSelectedAddress != null)
+                getPresenter().setPaymentAddress(mSelectedAddress);
+        }
     }
 
     @Override
@@ -63,7 +70,14 @@ public class OrderPaymentFragment extends BaseFragment<OrderPaymentView, OrderPa
     }
 
     @Override
+    public void onPaymentMethodSet() {
+        goToFragment(OrderShippingMethodFragment_.builder().build(), true);
+    }
+
+    @Override
     public void onItemClick(Address address) {
         mOrderAddressesAdapter.setSelected(mOrderAddressesAdapter.getItems().indexOf(address));
+        mSelectedAddress = address;
+        mNextBtn.setAlpha(1f);
     }
 }

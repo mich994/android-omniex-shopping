@@ -6,6 +6,7 @@ import nl.omniex.omniexshopping.ui.app.categories.CategoriesFragment_;
 import nl.omniex.omniexshopping.ui.app.main.home.HomeFragment_;
 import nl.omniex.omniexshopping.ui.app.order.payment.OrderPaymentFragment_;
 import nl.omniex.omniexshopping.ui.app.order.shipping.OrderShippingFragment_;
+import nl.omniex.omniexshopping.ui.app.order.shipping.method.OrderShippingMethodFragment_;
 import nl.omniex.omniexshopping.ui.app.product.ProductDetailsFragment_;
 import nl.omniex.omniexshopping.ui.app.product.list.ProductsListFragment_;
 import nl.omniex.omniexshopping.ui.app.profile.ProfileFragment_;
@@ -53,5 +54,8 @@ public abstract class FragmentsModule {
 
     @ContributesAndroidInjector
     public abstract OrderPaymentFragment_ contributeOrderPaymentFragment();
+
+    @ContributesAndroidInjector
+    public abstract OrderShippingMethodFragment_ contributeOrderShippingMethodFragment();
 
 }
