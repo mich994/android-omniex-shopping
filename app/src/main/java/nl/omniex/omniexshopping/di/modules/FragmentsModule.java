@@ -4,7 +4,9 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import nl.omniex.omniexshopping.ui.app.categories.CategoriesFragment_;
 import nl.omniex.omniexshopping.ui.app.main.home.HomeFragment_;
+import nl.omniex.omniexshopping.ui.app.order.overview.OrderOverviewFragment_;
 import nl.omniex.omniexshopping.ui.app.order.payment.OrderPaymentFragment_;
+import nl.omniex.omniexshopping.ui.app.order.payment.method.OrderPaymentMethodsFragment_;
 import nl.omniex.omniexshopping.ui.app.order.shipping.OrderShippingFragment_;
 import nl.omniex.omniexshopping.ui.app.order.shipping.method.OrderShippingMethodFragment_;
 import nl.omniex.omniexshopping.ui.app.product.ProductDetailsFragment_;
@@ -57,5 +59,11 @@ public abstract class FragmentsModule {
 
     @ContributesAndroidInjector
     public abstract OrderShippingMethodFragment_ contributeOrderShippingMethodFragment();
+
+    @ContributesAndroidInjector
+    public abstract OrderPaymentMethodsFragment_ contributeOrderPaymentMethodsFragment();
+
+    @ContributesAndroidInjector
+    public abstract OrderOverviewFragment_ contributeOrderOverviewFragment();
 
 }

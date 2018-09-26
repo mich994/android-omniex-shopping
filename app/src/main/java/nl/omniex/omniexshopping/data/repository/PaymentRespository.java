@@ -6,32 +6,31 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import nl.omniex.omniexshopping.data.api.OmniexApi;
-import nl.omniex.omniexshopping.data.model.response.ShippingMethodResponse;
-import nl.omniex.omniexshopping.data.model.shipping.ShippingMethodSetter;
+import nl.omniex.omniexshopping.data.model.payment.PaymentMethodSetter;
 import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 import retrofit2.Response;
 
-public class ShippingRepository {
+public class PaymentRespository {
 
     private OmniexApi mOmniexApi;
     private SharedPrefUtils mSharedPrefUtils;
 
     @Inject
-    ShippingRepository(OmniexApi omniexApi, SharedPrefUtils sharedPrefUtils){
+    PaymentRespository(OmniexApi omniexApi, SharedPrefUtils sharedPrefUtils){
         mOmniexApi = omniexApi;
         mSharedPrefUtils = sharedPrefUtils;
     }
 
-    public Single<Response<ShippingMethodResponse>> getShippingMethods(){
+    public Single<Response<Void>> getPaymentMethods(){
         return mOmniexApi
-                .getShippingMethods(mSharedPrefUtils.getAccessToken())
+                .getPaymentMethods(mSharedPrefUtils.getAccessToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Response<Void>> setShippingMethod(ShippingMethodSetter shippingMethodSetter){
+    public Single<Response<Void>> setPaymentMethod(PaymentMethodSetter paymentMethodSetter){
         return mOmniexApi
-                .setShippingMethod(mSharedPrefUtils.getAccessToken(),shippingMethodSetter)
+                .setPaymentMethod(mSharedPrefUtils.getAccessToken(), paymentMethodSetter)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -7,6 +7,7 @@ import nl.omniex.omniexshopping.data.model.auth.Login;
 import nl.omniex.omniexshopping.data.model.auth.OldToken;
 import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
 import nl.omniex.omniexshopping.data.model.order.OrderAddress;
+import nl.omniex.omniexshopping.data.model.payment.PaymentMethodSetter;
 import nl.omniex.omniexshopping.data.model.response.AccessTokenResponse;
 import nl.omniex.omniexshopping.data.model.response.AddressListResponse;
 import nl.omniex.omniexshopping.data.model.response.CartResponse;
@@ -17,7 +18,9 @@ import nl.omniex.omniexshopping.data.model.response.LoginResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductsListResponse;
 import nl.omniex.omniexshopping.data.model.response.OrderAddressesResponse;
+import nl.omniex.omniexshopping.data.model.response.ShippingMethodResponse;
 import nl.omniex.omniexshopping.data.model.response.ZoneResponse;
+import nl.omniex.omniexshopping.data.model.shipping.ShippingMethodSetter;
 import nl.omniex.omniexshopping.data.model.shipping.ShippingQuote;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -105,8 +108,14 @@ public interface OmniexApi {
 
     //region SHIPPING
     @GET("index.php?route=rest/shipping_method/shippingmethods")
-    Single<Response<Void>> getShippingMethods(
+    Single<Response<ShippingMethodResponse>> getShippingMethods(
             @Header("Authorization") String accessToken
+    );
+
+    @POST("index.php?route=rest/shipping_method/shippingmethods")
+    Single<Response<Void>> setShippingMethod(
+            @Header("Authorization") String accessToken,
+            @Body ShippingMethodSetter shippingMethodSetter
     );
 
     @POST("index.php?route=rest/cart/shippingquotes")
@@ -199,6 +208,11 @@ public interface OmniexApi {
     Single<Response<Void>> simpleConfirmSave(
             @Header("Authorization") String accessToken
     );
+
+    @GET("index.php?route=rest/confirm/confirm")
+    Single<Response<Void>> confirmOrder(
+            @Header("Authorization") String accessToken
+    );
     //endregion
 
     //region PAYMENTS
@@ -218,6 +232,17 @@ public interface OmniexApi {
     Single<Response<Void>> setExisitingPaymentAddress(
             @Header("Authorization") String accessToken,
             @Body Address existingAddress
+    );
+
+    @GET("index.php?route=rest/payment_method/payments")
+    Single<Response<Void>> getPaymentMethods(
+            @Header("Authorization") String accessToken
+    );
+
+    @POST("index.php?route=rest/payment_method/payments")
+    Single<Response<Void>> setPaymentMethod(
+            @Header("Authorization") String accessToken,
+            @Body PaymentMethodSetter paymentMethodSetter
     );
 
     //endregion

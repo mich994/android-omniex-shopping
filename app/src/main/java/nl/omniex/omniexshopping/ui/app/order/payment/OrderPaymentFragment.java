@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.data.model.address.Address;
 import nl.omniex.omniexshopping.ui.adapters.OrderAddressesAdapter;
+import nl.omniex.omniexshopping.ui.app.order.OrderActivity;
 import nl.omniex.omniexshopping.ui.app.order.shipping.method.OrderShippingMethodFragment_;
 import nl.omniex.omniexshopping.ui.app.profile.address.edit.EditAddressActivity_;
 import nl.omniex.omniexshopping.ui.base.BaseFragment;
@@ -38,12 +39,14 @@ public class OrderPaymentFragment extends BaseFragment<OrderPaymentView, OrderPa
     OrderAddressesAdapter mOrderAddressesAdapter;
 
     private Address mSelectedAddress;
+    private OrderActivity mOrderActivity;
 
     @Override
     public void onResume() {
         super.onResume();
         if(mOrderAddressesAdapter!=null)
             getPresenter().getPaymentAddresses();
+        mOrderActivity = (OrderActivity) getActivity();
     }
 
     @AfterViews
@@ -71,6 +74,7 @@ public class OrderPaymentFragment extends BaseFragment<OrderPaymentView, OrderPa
 
     @Override
     public void onPaymentMethodSet() {
+        mOrderActivity.setPaymentAddress(mSelectedAddress);
         goToFragment(OrderShippingMethodFragment_.builder().build(), true);
     }
 

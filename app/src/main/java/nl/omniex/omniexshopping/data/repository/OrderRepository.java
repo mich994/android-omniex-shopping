@@ -26,4 +26,12 @@ public class OrderRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Single<Response<Void>> confirmOrder(){
+        return mOmniexApi
+                .confirmOrder(mSharedPrefUtils.getAccessToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }
