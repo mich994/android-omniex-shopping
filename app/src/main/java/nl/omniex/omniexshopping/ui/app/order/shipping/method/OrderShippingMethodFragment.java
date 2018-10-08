@@ -74,5 +74,6 @@ public class OrderShippingMethodFragment extends BaseFragment<OrderShippingMetho
     public void onItemClick(ShippingMethod shippingMethod) {
         mSelectedMethod = shippingMethod;
         mShippingMethodsAdapter.setSelection(mShippingMethodsAdapter.getItems().indexOf(shippingMethod));
+        mNextBtn.setAlpha(1f);
     }
 }

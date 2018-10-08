@@ -1,5 +1,8 @@
 package nl.omniex.omniexshopping.ui.app.order.payment;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import javax.inject.Inject;
 
 import nl.omniex.omniexshopping.data.model.address.Address;
@@ -20,7 +23,7 @@ public class OrderPaymentPresenter extends BasePresenter<OrderPaymentView> {
                 .getPaymentAddresses()
                 .subscribe(
                         shippingAddressesResponse -> {
-                            ifViewAttached(view -> view.onPaymentAddressesFetched(shippingAddressesResponse.body().getShippingAddressList().getAddressList()));
+                            ifViewAttached(view -> view.onPaymentAddressesFetched(new ArrayList<>(new HashSet<>(shippingAddressesResponse.body().getShippingAddressList().getAddressList()))));
                         }, Throwable::printStackTrace));
     }
 

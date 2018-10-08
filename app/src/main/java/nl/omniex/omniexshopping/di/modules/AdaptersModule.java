@@ -16,6 +16,8 @@ import nl.omniex.omniexshopping.ui.adapters.FeatureProductsAdapter;
 import nl.omniex.omniexshopping.ui.adapters.FeatureProductsAdapter_;
 import nl.omniex.omniexshopping.ui.adapters.OrderAddressesAdapter;
 import nl.omniex.omniexshopping.ui.adapters.OrderAddressesAdapter_;
+import nl.omniex.omniexshopping.ui.adapters.OrderStatutesAdapter;
+import nl.omniex.omniexshopping.ui.adapters.OrderStatutesAdapter_;
 import nl.omniex.omniexshopping.ui.adapters.ProductDetailsImageAdapter;
 import nl.omniex.omniexshopping.ui.adapters.ProductDetailsImageAdapter_;
 import nl.omniex.omniexshopping.ui.adapters.ProductsListAdapter;
@@ -76,5 +78,10 @@ public class AdaptersModule {
     @Provides
     ShippingMethodsAdapter provideShippingMethodsAdapter(Context context){
         return ShippingMethodsAdapter_.getInstance_(context);
+    }
+
+    @Provides
+    OrderStatutesAdapter provideOrderStatutesAdapter(Context context){
+        return OrderStatutesAdapter_.getInstance_(context);
     }
 }

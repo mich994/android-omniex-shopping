@@ -30,11 +30,17 @@ public class ProductsListFragment extends BaseFragment<ProductsListView, Product
     @FragmentArg
     Integer mCategoryId;
 
+    @FragmentArg
+    Boolean mIsBestSellersList;
+
     @AfterViews
-    void initProductsList(){
+    void initProductsList() {
         mProductsListAdapter.setItemClickListener(this);
         mProductsRv.setAdapter(mProductsListAdapter);
-        getPresenter().getProductsList(mCategoryId);
+        if (mIsBestSellersList)
+            getPresenter().getBestsellers();
+        else
+            getPresenter().getProductsList(mCategoryId);
     }
 
     @Override

@@ -42,6 +42,6 @@ public class CategoriesFragment extends BaseFragment<CategoriesView, CategoriesP
 
     @Override
     public void onItemClick(Category category) {
-        goToFragment(ProductsListFragment_.builder().mCategoryId(category.getCategoryId()).build(), true);
+        goToFragment(ProductsListFragment_.builder().mIsBestSellersList(false).mCategoryId(category.getCategoryId()).build(), true);
     }
 }

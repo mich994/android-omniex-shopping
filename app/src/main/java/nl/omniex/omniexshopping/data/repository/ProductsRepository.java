@@ -19,33 +19,33 @@ public class ProductsRepository {
     private SharedPrefUtils mSharedPrefUtils;
 
     @Inject
-    ProductsRepository(OmniexApi omniexApi, SharedPrefUtils sharedPrefUtils){
+    ProductsRepository(OmniexApi omniexApi, SharedPrefUtils sharedPrefUtils) {
         mOmniexApi = omniexApi;
         mSharedPrefUtils = sharedPrefUtils;
     }
 
-    public Single<Response<CategoriesResponse>> getCategories(){
+    public Single<Response<CategoriesResponse>> getCategories() {
         return mOmniexApi
                 .getCategories(mSharedPrefUtils.getAccessToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Response<Void>> getProducts(){
+    public Single<Response<Void>> getProducts() {
         return mOmniexApi
                 .getProducts(mSharedPrefUtils.getAccessToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Response<ProductsListResponse>> getProductsByCat(Integer catId){
+    public Single<Response<ProductsListResponse>> getProductsByCat(Integer catId) {
         return mOmniexApi
                 .getProductsByCat(mSharedPrefUtils.getAccessToken(), catId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Response<ProductResponse>> getProductDetails(Integer id){
+    public Single<Response<ProductResponse>> getProductDetails(Integer id) {
         return mOmniexApi
                 .getProductDetails(mSharedPrefUtils.getAccessToken(), id)
                 .subscribeOn(Schedulers.io())
@@ -53,9 +53,16 @@ public class ProductsRepository {
     }
 
 
-    public Single<Response<FeaturedProductsResponse>> getListOfFeatured(){
+    public Single<Response<FeaturedProductsResponse>> getListOfFeatured() {
         return mOmniexApi
                 .getListOfFeatured(mSharedPrefUtils.getAccessToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Response<ProductsListResponse>> getBestsellers() {
+        return mOmniexApi
+                .getBestsellers(mSharedPrefUtils.getAccessToken(), 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

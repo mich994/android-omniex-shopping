@@ -7,6 +7,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import nl.omniex.omniexshopping.data.api.OmniexApi;
 import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
+import nl.omniex.omniexshopping.data.model.cart.CartItemDelete;
+import nl.omniex.omniexshopping.data.model.cart.CartQuantitySetter;
 import nl.omniex.omniexshopping.data.model.response.CartResponse;
 import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 import retrofit2.Response;
@@ -39,6 +41,21 @@ public class CartRepository {
     public Single<Response<Void>> emptyCart(){
         return mOmniexApi
                 .emptyCart(mSharedPrefUtils.getAccessToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Response<Void>> updateCartItemQuantity(CartQuantitySetter cartQuantitySetter){
+        return mOmniexApi
+                .updateCartItemQuantity(mSharedPrefUtils.getAccessToken(), cartQuantitySetter)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+    public Single<Response<Void>> deleteCartItem(CartItemDelete cartItemDelete){
+        return mOmniexApi
+                .deleteCartItem(mSharedPrefUtils.getAccessToken(), cartItemDelete)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

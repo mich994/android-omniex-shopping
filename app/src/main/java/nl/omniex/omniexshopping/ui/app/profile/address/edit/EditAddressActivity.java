@@ -70,7 +70,7 @@ public class EditAddressActivity extends BaseActivity<EditAddressView, EditAddre
                 .setIconStarClickListener(this::finish);
         if (!mIsNewAddress) {
             getCustomToolbar()
-                    .setIconEnd(R.drawable.baseline_remove_black_36)
+                    .setIconEnd(R.drawable.baseline_delete_outline_black_36)
                     .setIconEndClickListener(() -> getPresenter().removeAddress(Integer.valueOf(mAddress.getAddressId())));
         }
     }

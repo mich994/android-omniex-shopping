@@ -55,6 +55,7 @@ public class OrderPaymentMethodsFragment extends BaseFragment<OrderPaymentMethod
             mBankCd.setCardBackgroundColor(getResources().getColor(R.color.icons));
             mPaymentMethod = "PayPal";
         }
+        mNextBtn.setAlpha(1f);
     }
 
     @Click(R.id.payment_method_next_btn)

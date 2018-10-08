@@ -5,4 +5,6 @@
     <string name="login">LOGIN</string>
     <string name="exit">EXIT</string>
     <string name="register">REGISTER</string>
+    <string name="newsletter_unsubscribed_info">Would you like to subscribe our newsletter to getting the newest info about offers and deals? (You can unsubscribe it in any moment)</string>
+    <string name="newsletter_subscribed_info">You already subscribe our newsletter.</string>
 </resources>

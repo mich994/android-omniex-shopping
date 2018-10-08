@@ -74,6 +74,11 @@ public class OrderShippingFragment extends BaseFragment<OrderShippingView, Order
     }
 
     @Override
+    public void onGetShippingAddressesFailed() {
+        mEmptyListTv.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void onShippingAddressSet() {
         mOrderActivity.setShippingAddress(mSelectedAddress);
         goToFragment(OrderPaymentFragment_.builder().build(),true);

@@ -1,5 +1,6 @@
 package nl.omniex.omniexshopping.ui.app.auth.login;
 
+import android.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 
@@ -58,4 +59,13 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
         MainMenuActivity_.intent(this).start();
     }
 
+    @Override
+    public void onLoginErrorMessage(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder
+                .setCancelable(false)
+                .setMessage(message)
+                .setPositiveButton("OK", (dialog, id)->dialog.dismiss());
+        builder.show();
+    }
 }

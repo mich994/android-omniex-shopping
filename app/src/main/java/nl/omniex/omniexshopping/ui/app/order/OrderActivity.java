@@ -2,7 +2,6 @@ package nl.omniex.omniexshopping.ui.app.order;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
 
 import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.data.model.address.Address;
@@ -17,21 +16,23 @@ public class OrderActivity extends BaseActivity<OrderView, OrderPresenter> imple
 
     private OrderOverview mOrderOverview = new OrderOverview();
 
-    @Extra
-    Cart mCart;
-
     @Override
     protected void onFirstCreate() {
         super.onFirstCreate();
         getCustomToolbar()
                 .setIconStart(R.drawable.twotone_arrow_back_black_36)
                 .setIconStarClickListener(this::finish);
-        mOrderOverview.setCart(mCart);
     }
 
     @AfterViews
     void initOrderProcess() {
+        getPresenter().getCart();
+    }
+
+    @Override
+    public void onCartFetched(Cart cart) {
         goToFragment(OrderShippingFragment_.builder().build(), true, "");
+        mOrderOverview.setCart(cart);
     }
 
     public void setShippingAddress(Address shippingAddress){
@@ -52,5 +53,25 @@ public class OrderActivity extends BaseActivity<OrderView, OrderPresenter> imple
 
     public OrderOverview getOrderOverview() {
         return mOrderOverview;
+    }
+
+    @Override
+    public void startLoading() {
+        showProgressBar();
+    }
+
+    @Override
+    public void stopLoading() {
+        hideProgressBar();
+    }
+
+    @Override
+    public void onOrderOverviewSuccess() {
+        goToFragment(OrderShippingFragment_.builder().build(), true, "");
+    }
+
+    @Override
+    public void onOrderOverviewFailed() {
+        finish();
     }
 }

@@ -2,11 +2,15 @@ package nl.omniex.omniexshopping.ui.app.main;
 
 import javax.inject.Inject;
 
+import nl.omniex.omniexshopping.data.model.cart.CartItemDelete;
+import nl.omniex.omniexshopping.data.model.cart.CartQuantitySetter;
 import nl.omniex.omniexshopping.data.repository.CartRepository;
 import nl.omniex.omniexshopping.data.repository.OrderRepository;
 import nl.omniex.omniexshopping.data.repository.ProfileRepository;
 import nl.omniex.omniexshopping.ui.base.BasePresenter;
+import nl.omniex.omniexshopping.ui.base.BaseView;
 import nl.omniex.omniexshopping.utils.SharedPrefUtils;
+import timber.log.Timber;
 
 public class MainMenuPresenter extends BasePresenter<MainMenuView> {
 
@@ -34,28 +38,39 @@ public class MainMenuPresenter extends BasePresenter<MainMenuView> {
     }
 
     void getCart() {
+        ifViewAttached(BaseView::startLoading);
         addDisposable(mCartRepository
                 .getCart()
                 .subscribe(
                         cartResponse ->
                         {
-                            ifViewAttached(view -> view.onCartFetched(cartResponse.body().getCart()));
+                            ifViewAttached(view -> {
+                                view.onCartFetched(cartResponse.body().getCart());
+                                view.stopLoading();
+                            });
                         },
                         error -> {
                             error.printStackTrace();
+                            Timber.e(error);
+                            ifViewAttached(BaseView::stopLoading);
                         }));
     }
 
-    void testOrder() {
-        addDisposable(mOrderRepository
-                .simpleConfirm()
+    void updateCartQuantity(CartQuantitySetter cartQuantitySetter) {
+        addDisposable(mCartRepository
+                .updateCartItemQuantity(cartQuantitySetter)
                 .subscribe(voidResponse -> {
+                    if(voidResponse.code()==200)
+                        ifViewAttached(MainMenuView::onCartItemQuantityUpdated);
                 }, Throwable::printStackTrace));
     }
 
-    void testEmptyCart(){
+    void deleteCartItem(CartItemDelete cartItemDelete) {
         addDisposable(mCartRepository
-        .emptyCart()
-        .subscribe(voidResponse -> {}, Throwable::printStackTrace));
+                .deleteCartItem(cartItemDelete)
+                .subscribe(voidResponse -> {
+                    if(voidResponse.code()==200)
+                        ifViewAttached(MainMenuView::onCartItemQuantityUpdated);
+                }, Throwable::printStackTrace));
     }
 }

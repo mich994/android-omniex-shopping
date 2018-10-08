@@ -8,5 +8,6 @@ import nl.omniex.omniexshopping.ui.base.BaseView;
 public interface OrderShippingView extends BaseView {
 
     void onShippingAddressesFetched(List<Address> addressList);
+    void onGetShippingAddressesFailed();
     void onShippingAddressSet();
 }
