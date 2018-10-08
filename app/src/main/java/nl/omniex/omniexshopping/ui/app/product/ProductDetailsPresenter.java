@@ -24,9 +24,7 @@ public class ProductDetailsPresenter extends BasePresenter<ProductDetailsView> {
 
     void getProductDetails(Integer id) {
         ifViewAttached(
-                view -> {
-                    view.startLoading();
-                });
+                BaseView::startLoading);
         addDisposable(mProductsRepository
                 .getProductDetails(id)
                 .subscribe(
@@ -44,16 +42,16 @@ public class ProductDetailsPresenter extends BasePresenter<ProductDetailsView> {
     }
 
     void addToCart(AddToCartModel addToCartModel) {
-        ifViewAttached(BaseView::startLoading);
+        ifViewAttached(ProductDetailsView::startLoading);
         addDisposable(mCartRepository
                 .addToCart(addToCartModel)
                 .subscribe(
                         voidResponse -> {
                             if(voidResponse.code()==200){}
-                            ifViewAttached(BaseView::stopLoading);
+                            ifViewAttached(ProductDetailsView::stopLoading);
                         },
                         error -> {
-                            ifViewAttached(BaseView::stopLoading);
+                            ifViewAttached(ProductDetailsView::stopLoading);
                             Timber.e(error);
                         }));
     }

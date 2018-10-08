@@ -1,5 +1,7 @@
 package nl.omniex.omniexshopping.ui.app.main;
 
+import com.google.gson.JsonSyntaxException;
+
 import javax.inject.Inject;
 
 import nl.omniex.omniexshopping.data.model.cart.CartItemDelete;
@@ -51,6 +53,8 @@ public class MainMenuPresenter extends BasePresenter<MainMenuView> {
                         },
                         error -> {
                             error.printStackTrace();
+                            if(error instanceof JsonSyntaxException)
+                                ifViewAttached(view -> view.onCartEmpty());
                             Timber.e(error);
                             ifViewAttached(BaseView::stopLoading);
                         }));

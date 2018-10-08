@@ -58,6 +58,6 @@
         android:id="@+id/menu_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.5"
-        android:visibility="gone" />
+        android:alpha="1"
+        android:visibility="gone"/>
 </nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout>

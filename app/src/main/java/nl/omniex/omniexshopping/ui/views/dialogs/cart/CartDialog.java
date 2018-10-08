@@ -1,5 +1,7 @@
 package nl.omniex.omniexshopping.ui.views.dialogs.cart;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -46,9 +48,8 @@ public class CartDialog extends DialogFragment implements CartAdapter.OnCartItem
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        layoutParams.horizontalMargin = 20f;
         getDialog().getWindow().setAttributes(layoutParams);
-        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.background_cart_dialog_round);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     @AfterViews

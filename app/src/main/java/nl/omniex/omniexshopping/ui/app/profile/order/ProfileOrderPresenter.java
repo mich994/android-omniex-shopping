@@ -24,10 +24,4 @@ public class ProfileOrderPresenter extends BasePresenter<ProfileOrderView> {
                             }, Throwable::printStackTrace));
     }
 
-    void getOrderDetails(Integer id) {
-        addDisposable(mOrderRepository
-                .getOrderDetails(id)
-                .subscribe(voidResponse -> {
-                }, Throwable::printStackTrace));
-    }
 }

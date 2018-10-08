@@ -25,10 +25,9 @@ public class ProfileOrderFragment extends BaseFragment<ProfileOrderView, Profile
     OrderStatutesAdapter mOrderStatutesAdapter;
 
     @AfterViews
-    void initOrdersList(){
+    void initOrdersList() {
         mOrdersRv.setAdapter(mOrderStatutesAdapter);
-        getPresenter().getOrderStatuses();
-        getPresenter().getOrderDetails(28);
+            getPresenter().getOrderStatuses();
     }
 
     @Override

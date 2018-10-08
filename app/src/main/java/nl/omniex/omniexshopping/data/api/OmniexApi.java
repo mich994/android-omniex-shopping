@@ -77,7 +77,7 @@ public interface OmniexApi {
     @GET("index.php?route=feed/rest_api/products")
     Single<Response<ProductsListResponse>> getProductsByCat(
             @Header("Authorization") String accessToken,
-            @Query("category_id") Integer catId
+            @Query("category") Integer catId
     );
 
     @GET("index.php?route=feed/rest_api/featured")

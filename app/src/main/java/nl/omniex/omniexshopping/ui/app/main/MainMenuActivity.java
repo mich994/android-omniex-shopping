@@ -1,5 +1,6 @@
 package nl.omniex.omniexshopping.ui.app.main;
 
+import android.app.AlertDialog;
 import android.widget.ImageView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -77,7 +78,7 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
                     goToFragment(HomeFragment_.builder().build(), false, "");
                     break;
                 case 1:
-                    goToFragment(ProductsListFragment_.builder().mIsBestSellersList(true).build(), false,"");
+                    goToFragment(ProductsListFragment_.builder().mIsBestSellersList(true).build(), false, "");
                     break;
                 case 2:
                     goToFragment(CategoriesFragment_.builder().build(), false, "");
@@ -86,10 +87,10 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
                     goToFragment(ProfileFragment_.builder().build(), false, "");
                     break;
                 case 4:
-                    goToFragment(NewsletterFragment_.builder().build(), false,"");
+                    goToFragment(NewsletterFragment_.builder().build(), false, "");
                     break;
                 case 5:
-                    goToFragment(AboutFragment_.builder().build(), false,"");
+                    goToFragment(AboutFragment_.builder().build(), false, "");
                     break;
                 case 6:
                     getPresenter().logout();
@@ -125,11 +126,11 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
 
     @Override
     public void onCartFetched(Cart cart) {
-        if(!mIsCartOpen){
-        mCartDialog = CartDialog_.builder().mCart(cart).build().setOnUpdateItemQuantityListener(this).setOnMakeOrderClickListener(this);
-        mCartDialog.show(getSupportFragmentManager(), "dialog");
-        mIsCartOpen = true;}
-        else {
+        if (!mIsCartOpen) {
+            mCartDialog = CartDialog_.builder().mCart(cart).build().setOnUpdateItemQuantityListener(this).setOnMakeOrderClickListener(this);
+            mCartDialog.show(getSupportFragmentManager(), "dialog");
+            mIsCartOpen = true;
+        } else {
             mCartDialog.refreshCart(cart);
         }
     }
@@ -157,6 +158,14 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
     @Override
     public void onCartItemQuantityUpdated() {
         getPresenter().getCart();
+    }
+
+    @Override
+    public void onCartEmpty() {
+        if (mCartDialog != null && mCartDialog.isVisible())
+            mCartDialog.dismiss();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setMessage("Cart is empty.").setPositiveButton("OK", ((dialog, which) -> dialog.dismiss()));
+        builder.show();
     }
 
     @Override

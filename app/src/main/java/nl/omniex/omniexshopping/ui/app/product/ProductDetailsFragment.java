@@ -85,6 +85,15 @@ public class ProductDetailsFragment extends BaseFragment<ProductDetailsView, Pro
         initViewPager(product.getImageUrlsList());
         mPriceTv.setText(product.getPriceExcTaxFormated());
         mDescriptionTv.setText(Html.fromHtml(product.getDescription()));
+    }
 
+    @Override
+    public void startLoading() {
+        getBaseActivity().startLoading();
+    }
+
+    @Override
+    public void stopLoading() {
+        getBaseActivity().stopLoading();
     }
 }

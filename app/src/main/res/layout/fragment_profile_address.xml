@@ -35,6 +35,6 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/margin_medium"
         android:background="@drawable/background_button_login"
-        android:text="Add addAddress" />
+        android:text="Add address" />
 
 </RelativeLayout>
