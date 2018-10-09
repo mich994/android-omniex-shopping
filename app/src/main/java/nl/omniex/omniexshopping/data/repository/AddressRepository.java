@@ -76,7 +76,7 @@ public class AddressRepository {
 
     public Single<Response<Void>> setExistingShippingAddress(Address existingAddress) {
         return mOmniexApi
-                .setExisitingShippingAddress(mSharedPrefUtils.getAccessToken(), existingAddress)
+                .setExistingShippingAddress(mSharedPrefUtils.getAccessToken(), existingAddress)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

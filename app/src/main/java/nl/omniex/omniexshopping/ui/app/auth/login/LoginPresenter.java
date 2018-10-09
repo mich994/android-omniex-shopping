@@ -22,7 +22,9 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 .login(login)
                 .subscribe(voidResponse -> {
                     if (voidResponse.code() == 200) {
+                        SharedPrefUtils.setUserGuest(false);
                         SharedPrefUtils.setUserLogged(true);
+                        SharedPrefUtils.setTaxValue(Integer.valueOf(voidResponse.body().getProfile().getAccountCustomField().getTaxNumber()));
                         SharedPrefUtils.setNewsletterStatus(voidResponse.body().getProfile().getNewsletter().equals("1"));
                         ifViewAttached(LoginView::onLoginSuccess);
                     } else if (voidResponse.code() == 403) {

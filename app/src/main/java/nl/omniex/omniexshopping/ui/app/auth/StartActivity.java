@@ -8,6 +8,8 @@ import org.androidannotations.annotations.EActivity;
 import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.ui.app.auth.login.LoginActivity_;
 import nl.omniex.omniexshopping.ui.app.auth.register.RegisterActivity_;
+import nl.omniex.omniexshopping.ui.app.main.MainMenuActivity_;
+import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 
 @EActivity(R.layout.activity_start)
 public class StartActivity extends AppCompatActivity {
@@ -20,5 +22,11 @@ public class StartActivity extends AppCompatActivity {
     @Click(R.id.start_register_btn)
     void onRegisterClick(){
         RegisterActivity_.intent(this).start();
+    }
+
+    @Click(R.id.start_guest_btn)
+    void onStartGuestClick(){
+        SharedPrefUtils.setUserGuest(true);
+        MainMenuActivity_.intent(this).start();
     }
 }

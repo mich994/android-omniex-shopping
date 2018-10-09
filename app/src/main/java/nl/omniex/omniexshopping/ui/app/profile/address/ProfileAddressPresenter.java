@@ -1,5 +1,8 @@
 package nl.omniex.omniexshopping.ui.app.profile.address;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import javax.inject.Inject;
 
 import nl.omniex.omniexshopping.data.repository.AddressRepository;
@@ -20,7 +23,7 @@ public class ProfileAddressPresenter extends BasePresenter<ProfileAddressView> {
                 .subscribe(
                         addressesResponse -> {
                             if (addressesResponse.isSuccessful() && addressesResponse.code() == 200) {
-                                ifViewAttached(view -> view.onAddressListFetched(addressesResponse.body().getAddressWrapper().getAddressList()));
+                                ifViewAttached(view -> view.onAddressListFetched(new ArrayList<>(new HashSet<>(addressesResponse.body().getAddressWrapper().getAddressList()))));
                             }
                         }, Throwable::printStackTrace));
     }

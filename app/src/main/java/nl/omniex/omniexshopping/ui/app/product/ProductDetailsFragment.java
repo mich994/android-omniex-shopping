@@ -3,6 +3,7 @@ package nl.omniex.omniexshopping.ui.app.product;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -18,7 +19,9 @@ import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
 import nl.omniex.omniexshopping.data.model.products.Product;
 import nl.omniex.omniexshopping.ui.adapters.DetailsImagePagerAdapter;
+import nl.omniex.omniexshopping.ui.app.main.MainMenuActivity;
 import nl.omniex.omniexshopping.ui.base.BaseFragment;
+import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 
 @EFragment(R.layout.fragment_product_details)
 public class ProductDetailsFragment extends BaseFragment<ProductDetailsView, ProductDetailsPresenter> implements ProductDetailsView {
@@ -38,18 +41,25 @@ public class ProductDetailsFragment extends BaseFragment<ProductDetailsView, Pro
     @ViewById(R.id.product_details_description_tv)
     TextView mDescriptionTv;
 
+    @ViewById(R.id.product_details_add_to_cart_btn)
+    ImageButton mAddToCartButton;
+
     @FragmentArg
     Integer mProductId;
 
     private DetailsImagePagerAdapter mDetailsImagePagerAdapter;
     private int mQuantity = 1;
+    private MainMenuActivity mMainMenuActivity;
 
     @AfterViews
     void initializeDetails() {
+        mMainMenuActivity = (MainMenuActivity) getActivity();
+        if (!SharedPrefUtils.isUserLogged())
+            mAddToCartButton.setAlpha(.5f);
         getPresenter().getProductDetails(mProductId);
     }
 
-    private void initViewPager(List<String> imagesUrl){
+    private void initViewPager(List<String> imagesUrl) {
         mDetailsImagePagerAdapter = new DetailsImagePagerAdapter(getFragmentManager(), imagesUrl);
         mDetailsImagesVp.setAdapter(mDetailsImagePagerAdapter);
         mCircleIndicator.setViewPager(mDetailsImagesVp);
@@ -59,7 +69,7 @@ public class ProductDetailsFragment extends BaseFragment<ProductDetailsView, Pro
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.product_details_add_to_cart_btn:
-                getPresenter().addToCart(new AddToCartModel(String.valueOf(mProductId), String.valueOf(mQuantity)));
+                handleAddToCartClick();
                 break;
             case R.id.product_details_quantity_add:
                 handleQuantity(true);
@@ -67,6 +77,14 @@ public class ProductDetailsFragment extends BaseFragment<ProductDetailsView, Pro
             case R.id.product_details_quantity_remove:
                 handleQuantity(false);
                 break;
+        }
+    }
+
+    private void handleAddToCartClick() {
+        if (SharedPrefUtils.isUserLogged())
+            getPresenter().addToCart(new AddToCartModel(String.valueOf(mProductId), String.valueOf(mQuantity)));
+        else {
+            mMainMenuActivity.showGuestWarnDialog();
         }
     }
 

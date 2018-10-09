@@ -27,6 +27,7 @@ import nl.omniex.omniexshopping.ui.base.menu.BaseMenuActivity;
 import nl.omniex.omniexshopping.ui.base.menu.MenuAdapter;
 import nl.omniex.omniexshopping.ui.views.dialogs.cart.CartDialog;
 import nl.omniex.omniexshopping.ui.views.dialogs.cart.CartDialog_;
+import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 
 @EActivity(R.layout.activity_main_menu)
 public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView, MainMenuPresenter> implements MainMenuView, CartDialog.OnUpdateItemQuantityListener, CartDialog.OnMakeOrderClickListener {
@@ -84,16 +85,16 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
                     goToFragment(CategoriesFragment_.builder().build(), false, "");
                     break;
                 case 3:
-                    goToFragment(ProfileFragment_.builder().build(), false, "");
+                    handleProfileClick();
                     break;
                 case 4:
-                    goToFragment(NewsletterFragment_.builder().build(), false, "");
+                    handleNewsletterClick();
                     break;
                 case 5:
                     goToFragment(AboutFragment_.builder().build(), false, "");
                     break;
                 case 6:
-                    getPresenter().logout();
+                    handleLogoutClick();
                     break;
             }
         }
@@ -102,15 +103,66 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
     @Override
     public MenuAdapter createAdapter() {
         List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new MenuItem("Featured Products"));
-        menuItems.add(new MenuItem("Bestsellers"));
-        menuItems.add(new MenuItem("Products"));
-        menuItems.add(new MenuItem("Profile"));
-        menuItems.add(new MenuItem("Newsletter"));
-        menuItems.add(new MenuItem("About Omniex"));
-        menuItems.add(new MenuItem("Logout"));
 
+        if (SharedPrefUtils.isUserLogged()) {
+            menuItems.add(new MenuItem("Featured Products"));
+            menuItems.add(new MenuItem("Bestsellers"));
+            menuItems.add(new MenuItem("Products"));
+            menuItems.add(new MenuItem("Profile"));
+            menuItems.add(new MenuItem("Newsletter"));
+            menuItems.add(new MenuItem("About Omniex"));
+            menuItems.add(new MenuItem("Logout"));
+        } else {
+            menuItems.add(new MenuItem("Featured Products"));
+            menuItems.add(new MenuItem("Bestsellers"));
+            menuItems.add(new MenuItem("Products"));
+            menuItems.add(new MenuItem("Profile"));
+            menuItems.add(new MenuItem("Newsletter"));
+            menuItems.add(new MenuItem("About Omniex"));
+            menuItems.add(new MenuItem("Login"));
+        }
         return new MenuAdapter(menuItems);
+    }
+
+    private void handleLogoutClick() {
+        if (SharedPrefUtils.isUserLogged()) {
+            getPresenter().logout();
+        } else {
+            finish();
+            StartActivity_.intent(this).start();
+        }
+    }
+
+    private void handleProfileClick() {
+        if (SharedPrefUtils.isUserLogged()) {
+            goToFragment(ProfileFragment_.builder().build(), false, "");
+        } else {
+            showGuestWarnDialog();
+        }
+    }
+
+    private void handleNewsletterClick() {
+        if (SharedPrefUtils.isUserLogged()) {
+            goToFragment(NewsletterFragment_.builder().build(), false, "");
+        } else {
+            showGuestWarnDialog();
+        }
+    }
+
+    public void showGuestWarnDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false)
+                .setMessage("Please log in to get access to this function.")
+                .setPositiveButton("Login",
+                        ((dialog, which) -> {
+                            finish();
+                            dialog.dismiss();
+                            StartActivity_.intent(this).start();
+                        }))
+                .setNegativeButton("Later", ((dialog, which) -> {
+                    dialog.dismiss();
+                }))
+                .show();
     }
 
     @Override
@@ -126,12 +178,16 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
 
     @Override
     public void onCartFetched(Cart cart) {
-        if (!mIsCartOpen) {
-            mCartDialog = CartDialog_.builder().mCart(cart).build().setOnUpdateItemQuantityListener(this).setOnMakeOrderClickListener(this);
-            mCartDialog.show(getSupportFragmentManager(), "dialog");
-            mIsCartOpen = true;
+        if (SharedPrefUtils.isUserLogged()) {
+            if (!mIsCartOpen) {
+                mCartDialog = CartDialog_.builder().mCart(cart).build().setOnUpdateItemQuantityListener(this).setOnMakeOrderClickListener(this);
+                mCartDialog.show(getSupportFragmentManager(), "dialog");
+                mIsCartOpen = true;
+            } else {
+                mCartDialog.refreshCart(cart);
+            }
         } else {
-            mCartDialog.refreshCart(cart);
+            showGuestWarnDialog();
         }
     }
 
@@ -162,10 +218,14 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
 
     @Override
     public void onCartEmpty() {
-        if (mCartDialog != null && mCartDialog.isVisible())
-            mCartDialog.dismiss();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this).setMessage("Cart is empty.").setPositiveButton("OK", ((dialog, which) -> dialog.dismiss()));
-        builder.show();
+        if (SharedPrefUtils.isUserLogged()) {
+            if (mCartDialog != null && mCartDialog.isVisible())
+                mCartDialog.dismiss();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this).setMessage("Cart is empty.").setPositiveButton("OK", ((dialog, which) -> dialog.dismiss()));
+            builder.show();
+        } else {
+            showGuestWarnDialog();
+        }
     }
 
     @Override

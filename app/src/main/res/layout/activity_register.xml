@@ -26,13 +26,13 @@
                 android:id="@+id/register_input_password"
                 style="@style/RegisterInputEditText"
                 android:hint="Password"
-                android:inputType="textPassword|numberPassword" />
+                android:inputType="textPassword" />
 
             <EditText
                 android:id="@+id/register_input_confirm_password"
                 style="@style/RegisterInputEditText"
                 android:hint="Confirm password"
-                android:inputType="textPassword|numberPassword" />
+                android:inputType="textPassword" />
 
             <View style="@style/RegisterDivider" />
 
@@ -60,8 +60,14 @@
             <EditText
                 android:id="@+id/register_input_company_address"
                 style="@style/RegisterInputEditText"
-                android:hint="Company addAddress"
+                android:hint="Company address"
                 android:inputType="textCapWords" />
+
+            <EditText
+                android:id="@+id/register_input_telephone"
+                style="@style/RegisterInputEditText"
+                android:hint="Telephone"
+                android:inputType="phone" />
 
             <EditText
                 android:id="@+id/register_input_country"
@@ -111,6 +117,30 @@
             </LinearLayout>
 
             <View style="@style/RegisterDivider" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/margin_big"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/register_btn_register"
+                    android:background="@drawable/background_button_login"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    android:layout_width="0dp"
+                    android:text="Register"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/register_btn_cancel"
+                    android:text="Cancel"
+                    android:background="@drawable/background_button_login"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
         </LinearLayout>
 

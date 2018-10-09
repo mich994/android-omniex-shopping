@@ -12,7 +12,9 @@ public class SharedPrefUtils {
     private static final String ACCESS_TOKEN_KEY = "ACCESS_TOKEN";
     private static final String OLD_TOKEN_KEY = "OLD_TOKEN";
     private static final String IS_USER_LOGGED_KEY = "IS_USER_LOGGED";
+    private static final String IS_USER_GUEST = "IS_USER_GUEST";
     private static final String NEWSLETTER_STATUS_KEY = "IS_SUBSCRIBED";
+    private static final String TAX_KEY = "TAX";
 
     private Context mContext;
 
@@ -61,6 +63,18 @@ public class SharedPrefUtils {
                 .getBoolean(IS_USER_LOGGED_KEY, false);
     }
 
+    public static void setUserGuest(boolean isGuest) {
+        getSharedPref()
+                .edit()
+                .putBoolean(IS_USER_GUEST, isGuest)
+                .apply();
+    }
+
+    public static boolean isUserQuest() {
+        return getSharedPref()
+                .getBoolean(IS_USER_GUEST, false);
+    }
+
     public static void setNewsletterStatus(boolean isSubscribed){
         getSharedPref()
                 .edit()
@@ -71,5 +85,17 @@ public class SharedPrefUtils {
     public static boolean isNewsletterSubscribed(){
         return getSharedPref()
                 .getBoolean(NEWSLETTER_STATUS_KEY, false);
+    }
+
+    public static void setTaxValue(Integer tax) {
+        getSharedPref()
+                .edit()
+                .putInt(TAX_KEY, tax)
+                .apply();
+    }
+
+    public static Integer getTaxValue() {
+        return getSharedPref()
+                .getInt(TAX_KEY, 1);
     }
 }

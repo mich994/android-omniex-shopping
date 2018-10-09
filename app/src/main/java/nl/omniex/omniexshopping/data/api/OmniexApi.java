@@ -5,6 +5,7 @@ import nl.omniex.omniexshopping.data.model.address.AddAddress;
 import nl.omniex.omniexshopping.data.model.address.Address;
 import nl.omniex.omniexshopping.data.model.auth.Login;
 import nl.omniex.omniexshopping.data.model.auth.OldToken;
+import nl.omniex.omniexshopping.data.model.auth.register.RegisterSetter;
 import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
 import nl.omniex.omniexshopping.data.model.cart.CartItemDelete;
 import nl.omniex.omniexshopping.data.model.cart.CartQuantitySetter;
@@ -21,6 +22,7 @@ import nl.omniex.omniexshopping.data.model.response.OrderAddressesResponse;
 import nl.omniex.omniexshopping.data.model.response.OrderStatusesResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductsListResponse;
+import nl.omniex.omniexshopping.data.model.response.RegisterResponse;
 import nl.omniex.omniexshopping.data.model.response.ShippingMethodResponse;
 import nl.omniex.omniexshopping.data.model.response.ZoneResponse;
 import nl.omniex.omniexshopping.data.model.shipping.ShippingMethodSetter;
@@ -58,6 +60,12 @@ public interface OmniexApi {
     @POST("index.php?route=rest/logout/logout")
     Single<Response<Void>> logout(
             @Header("Authorization") String accessToken
+    );
+
+    @POST("index.php?route=rest/register/register")
+    Single<Response<RegisterResponse>> register(
+            @Header("Authorization") String accessToken,
+            @Body RegisterSetter registerSetter
     );
     //endregion
 
@@ -166,7 +174,7 @@ public interface OmniexApi {
     );
 
     @POST("index.php?route=rest/shipping_address/shippingaddress/existing")
-    Single<Response<Void>> setExisitingShippingAddress(
+    Single<Response<Void>> setExistingShippingAddress(
             @Header("Authorization") String accessToken,
             @Body Address existingAddress
     );
