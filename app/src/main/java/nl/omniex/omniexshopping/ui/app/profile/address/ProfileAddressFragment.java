@@ -10,6 +10,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -50,6 +51,8 @@ public class ProfileAddressFragment extends BaseFragment<ProfileAddressView, Pro
     }
 
     private void refreshList() {
+        if(mAddressesAdapter.getItemCount()==1)
+            mAddressesAdapter.setItems(new ArrayList<Address>());
         getPresenter().getAddressList();
     }
 

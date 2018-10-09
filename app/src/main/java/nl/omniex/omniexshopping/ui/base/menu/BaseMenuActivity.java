@@ -30,6 +30,13 @@ public abstract class BaseMenuActivity<MenuAdapter extends BaseMenuAdapter, MVie
     protected void onFirstCreate() {
         super.onFirstCreate();
         mOverlay = findViewById(getOverlayRes());
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+            if(getSupportFragmentManager().getBackStackEntryCount()>1){
+                mDuoDrawerLayout.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            }else {
+                mDuoDrawerLayout.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_UNLOCKED);
+            }
+        });
         mMenuHelper.onSetContent();
         mDuoDrawerLayout = mMenuHelper.mMenuViewHolder.mDuoDrawerLayout;
         mDuoDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {

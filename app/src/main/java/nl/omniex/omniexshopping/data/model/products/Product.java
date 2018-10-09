@@ -68,6 +68,8 @@ public class Product {
     private List<Category> mCategories;
     @SerializedName("quantity")
     private Integer mQuantity;
+    @SerializedName("thumb")
+    private String mImageThumb;
 
     public Integer getProductId() {
         return mProductId;
@@ -315,5 +317,9 @@ public class Product {
 
     public void setQuantity(Integer quantity) {
         mQuantity = quantity;
+    }
+
+    public String getImageThumb() {
+        return mImageThumb;
     }
 }

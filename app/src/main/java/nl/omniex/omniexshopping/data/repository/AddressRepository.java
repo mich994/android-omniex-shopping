@@ -8,10 +8,9 @@ import io.reactivex.schedulers.Schedulers;
 import nl.omniex.omniexshopping.data.api.OmniexApi;
 import nl.omniex.omniexshopping.data.model.address.AddAddress;
 import nl.omniex.omniexshopping.data.model.address.Address;
-import nl.omniex.omniexshopping.data.model.order.ExistingAddress;
 import nl.omniex.omniexshopping.data.model.order.OrderAddress;
 import nl.omniex.omniexshopping.data.model.response.AddressListResponse;
-import nl.omniex.omniexshopping.data.model.response.ShippingAddressesResponse;
+import nl.omniex.omniexshopping.data.model.response.OrderAddressesResponse;
 import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 import retrofit2.Response;
 
@@ -61,7 +60,7 @@ public class AddressRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Response<ShippingAddressesResponse>> getShippingAddresses() {
+    public Single<Response<OrderAddressesResponse>> getShippingAddresses() {
         return mOmniexApi
                 .getShippingAddresses(mSharedPrefUtils.getAccessToken())
                 .subscribeOn(Schedulers.io())
@@ -82,7 +81,7 @@ public class AddressRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Response<Void>> getPaymentAddresses() {
+    public Single<Response<OrderAddressesResponse>> getPaymentAddresses() {
         return mOmniexApi
                 .getPaymentAdresses(mSharedPrefUtils.getAccessToken())
                 .subscribeOn(Schedulers.io())
@@ -96,7 +95,7 @@ public class AddressRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Response<Void>> setExistingPaymentAddress(ExistingAddress existingAddress) {
+    public Single<Response<Void>> setExistingPaymentAddress(Address existingAddress) {
         return mOmniexApi
                 .setExisitingPaymentAddress(mSharedPrefUtils.getAccessToken(), existingAddress)
                 .subscribeOn(Schedulers.io())

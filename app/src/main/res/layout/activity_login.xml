@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/primary_lighter"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_medium"
+            android:inputType="textPassword"
             android:background="@drawable/background_login_edit_text"
             android:hint="@string/login_password"
             android:padding="@dimen/margin_medium"

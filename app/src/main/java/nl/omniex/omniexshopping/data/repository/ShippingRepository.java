@@ -6,7 +6,8 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import nl.omniex.omniexshopping.data.api.OmniexApi;
-import nl.omniex.omniexshopping.data.model.shipping.ShippingQuote;
+import nl.omniex.omniexshopping.data.model.response.ShippingMethodResponse;
+import nl.omniex.omniexshopping.data.model.shipping.ShippingMethodSetter;
 import nl.omniex.omniexshopping.utils.SharedPrefUtils;
 import retrofit2.Response;
 
@@ -21,9 +22,16 @@ public class ShippingRepository {
         mSharedPrefUtils = sharedPrefUtils;
     }
 
-    public Single<Response<Void>> getShippingQuotes(ShippingQuote shippingQuote){
+    public Single<Response<ShippingMethodResponse>> getShippingMethods(){
         return mOmniexApi
-                .getShippingQuotes(mSharedPrefUtils.getAccessToken(), shippingQuote)
+                .getShippingMethods(mSharedPrefUtils.getAccessToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Response<Void>> setShippingMethod(ShippingMethodSetter shippingMethodSetter){
+        return mOmniexApi
+                .setShippingMethod(mSharedPrefUtils.getAccessToken(),shippingMethodSetter)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

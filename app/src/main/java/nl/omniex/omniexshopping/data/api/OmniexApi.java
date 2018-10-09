@@ -6,8 +6,10 @@ import nl.omniex.omniexshopping.data.model.address.Address;
 import nl.omniex.omniexshopping.data.model.auth.Login;
 import nl.omniex.omniexshopping.data.model.auth.OldToken;
 import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
-import nl.omniex.omniexshopping.data.model.order.ExistingAddress;
+import nl.omniex.omniexshopping.data.model.cart.CartItemDelete;
+import nl.omniex.omniexshopping.data.model.cart.CartQuantitySetter;
 import nl.omniex.omniexshopping.data.model.order.OrderAddress;
+import nl.omniex.omniexshopping.data.model.payment.PaymentMethodSetter;
 import nl.omniex.omniexshopping.data.model.response.AccessTokenResponse;
 import nl.omniex.omniexshopping.data.model.response.AddressListResponse;
 import nl.omniex.omniexshopping.data.model.response.CartResponse;
@@ -15,15 +17,19 @@ import nl.omniex.omniexshopping.data.model.response.CategoriesResponse;
 import nl.omniex.omniexshopping.data.model.response.CountryResponse;
 import nl.omniex.omniexshopping.data.model.response.FeaturedProductsResponse;
 import nl.omniex.omniexshopping.data.model.response.LoginResponse;
+import nl.omniex.omniexshopping.data.model.response.OrderAddressesResponse;
+import nl.omniex.omniexshopping.data.model.response.OrderStatusesResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductResponse;
 import nl.omniex.omniexshopping.data.model.response.ProductsListResponse;
-import nl.omniex.omniexshopping.data.model.response.ShippingAddressesResponse;
+import nl.omniex.omniexshopping.data.model.response.ShippingMethodResponse;
 import nl.omniex.omniexshopping.data.model.response.ZoneResponse;
+import nl.omniex.omniexshopping.data.model.shipping.ShippingMethodSetter;
 import nl.omniex.omniexshopping.data.model.shipping.ShippingQuote;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -71,7 +77,7 @@ public interface OmniexApi {
     @GET("index.php?route=feed/rest_api/products")
     Single<Response<ProductsListResponse>> getProductsByCat(
             @Header("Authorization") String accessToken,
-            @Query("category_id") Integer catId
+            @Query("category") Integer catId
     );
 
     @GET("index.php?route=feed/rest_api/featured")
@@ -84,6 +90,13 @@ public interface OmniexApi {
             @Header("Authorization") String accessToken,
             @Query("id") Integer id
     );
+
+    @GET("index.php?route=feed/rest_api/bestsellers")
+    Single<Response<ProductsListResponse>> getBestsellers(
+            @Header("Authorization") String accessToken,
+            @Query("limit") Integer limit
+    );
+
     //endregion
 
     //region CART
@@ -98,16 +111,35 @@ public interface OmniexApi {
             @Header("Authorization") String accessToken
     );
 
+    @HTTP(method = "DELETE", path = "index.php?route=rest/cart/cart", hasBody = true)
+//    @DELETE("index.php?route=rest/cart/cart")
+    Single<Response<Void>> deleteCartItem(
+            @Header("Authorization") String accessToken,
+            @Body CartItemDelete cartItemDelete
+    );
+
     @DELETE("index.php?route=rest/cart/emptycart")
     Single<Response<Void>> emptyCart(
             @Header("Authorization") String accessToken
+    );
+
+    @PUT("index.php?route=rest/cart/cart")
+    Single<Response<Void>> updateCartItemQuantity(
+            @Header("Authorization") String accessToken,
+            @Body CartQuantitySetter cartQuantitySetter
     );
     //endregion
 
     //region SHIPPING
     @GET("index.php?route=rest/shipping_method/shippingmethods")
-    Single<Response<Void>> getShippingMethods(
+    Single<Response<ShippingMethodResponse>> getShippingMethods(
             @Header("Authorization") String accessToken
+    );
+
+    @POST("index.php?route=rest/shipping_method/shippingmethods")
+    Single<Response<Void>> setShippingMethod(
+            @Header("Authorization") String accessToken,
+            @Body ShippingMethodSetter shippingMethodSetter
     );
 
     @POST("index.php?route=rest/cart/shippingquotes")
@@ -123,7 +155,7 @@ public interface OmniexApi {
     );
 
     @GET("index.php?route=rest/shipping_address/shippingaddress")
-    Single<Response<ShippingAddressesResponse>> getShippingAddresses(
+    Single<Response<OrderAddressesResponse>> getShippingAddresses(
             @Header("Authorization") String accessToken
     );
 
@@ -186,9 +218,11 @@ public interface OmniexApi {
             @Query("id") Integer id
     );
 
-    @GET("index.php?route=feed/rest_api/order_statuses")
-    Single<Response<Void>> getOrderStatuses(
-            @Header("Authorization") String accessToken
+    @GET("index.php?route=rest/order/orders")
+    Single<Response<OrderStatusesResponse>> getOrderStatuses(
+            @Header("Authorization") String accessToken,
+            @Query("limit") Integer limit,
+            @Query("page") Integer page
     );
 
     @POST("index.php?route=rest/simple_confirm/confirm")
@@ -200,12 +234,22 @@ public interface OmniexApi {
     Single<Response<Void>> simpleConfirmSave(
             @Header("Authorization") String accessToken
     );
+
+    @POST("index.php?route=rest/confirm/confirm")
+    Single<Response<Void>> getOrderOverview(
+            @Header("Authorization") String accessToken
+    );
+
+    @PUT("index.php?route=rest/confirm/confirm")
+    Single<Response<Void>> confirmOrder(
+            @Header("Authorization") String accessToken
+    );
     //endregion
 
     //region PAYMENTS
 
     @GET("index.php?route=rest/payment_address/paymentaddress")
-    Single<Response<Void>> getPaymentAdresses(
+    Single<Response<OrderAddressesResponse>> getPaymentAdresses(
             @Header("Authorization") String accessToken
     );
 
@@ -215,10 +259,21 @@ public interface OmniexApi {
             @Body OrderAddress orderAddress
     );
 
-    @POST("index.php?route=rest/payment_address/paymentaddress")
+    @POST("index.php?route=rest/payment_address/paymentaddress/existing")
     Single<Response<Void>> setExisitingPaymentAddress(
             @Header("Authorization") String accessToken,
-            @Query("existing") ExistingAddress existingAddress
+            @Body Address existingAddress
+    );
+
+    @GET("index.php?route=rest/payment_method/payments")
+    Single<Response<Void>> getPaymentMethods(
+            @Header("Authorization") String accessToken
+    );
+
+    @POST("index.php?route=rest/payment_method/payments")
+    Single<Response<Void>> setPaymentMethod(
+            @Header("Authorization") String accessToken,
+            @Body PaymentMethodSetter paymentMethodSetter
     );
 
     //endregion
@@ -241,6 +296,27 @@ public interface OmniexApi {
     Single<Response<Void>> getManufacturers(
             @Header("Authorization") String accessToken
     );
+    //endregion
+
+    //region OTHERS
+
+    @GET("index.php?route=feed/rest_api/information")
+    Single<Response<Void>> getInformation(
+            @Header("Authorization") String accessToken
+    );
+
+    @GET("index.php?route=feed/rest_api/information")
+    Single<Response<Void>> getInformationById(
+            @Header("Authorization") String accessToken,
+            @Query("id") Integer id
+    );
+
+    @PUT("index.php?route=rest/account/newsletter")
+    Single<Response<Void>> subscribeNewsletter(
+            @Header("Authorization") String accessToken,
+            @Query("subscribe") Integer subscribe
+    );
+
     //endregion
 }
 

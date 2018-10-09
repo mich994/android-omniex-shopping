@@ -39,12 +39,12 @@ public class Address implements Serializable {
         return mAddressOne + " " + mAddressTwo + ", " + mCity + ", " + mZoneName + ", " + mCountry;
     }
 
-    public String getCountryNameFormated(){
-        return mCountry+", "+mIsoCodeTwo;
+    public String getCountryNameFormated() {
+        return mCountry + ", " + mIsoCodeTwo;
     }
 
-    public String getZoneNameFormated(){
-        return mZoneName+", "+mZoneCode;
+    public String getZoneNameFormated() {
+        return mZoneName + ", " + mZoneCode;
     }
 
     public String getAddressId() {
@@ -101,5 +101,20 @@ public class Address implements Serializable {
 
     public String getIsoCodeTwo() {
         return mIsoCodeTwo;
+    }
+
+    @Override
+    public int hashCode() {
+        int code = 0;
+        code = mCity.hashCode();
+        code += mAddressOne.hashCode();
+        code += mPostcode.hashCode();
+        return code;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Address address = (Address) obj;
+        return address.getCity().equals(mCity) && address.getAddressOne().equals(mAddressOne) && address.getPostcode().equals(mPostcode);
     }
 }

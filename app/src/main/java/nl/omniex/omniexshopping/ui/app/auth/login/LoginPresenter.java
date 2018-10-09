@@ -23,9 +23,15 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 .subscribe(voidResponse -> {
                     if (voidResponse.code() == 200) {
                         SharedPrefUtils.setUserLogged(true);
+                        SharedPrefUtils.setNewsletterStatus(voidResponse.body().getProfile().getNewsletter().equals("1"));
                         ifViewAttached(LoginView::onLoginSuccess);
+                    } else if (voidResponse.code() == 403) {
+                        ifViewAttached(view -> view.onLoginErrorMessage("Email and/or password are not correct."));
+                    } else {
+                        ifViewAttached(view -> view.onLoginErrorMessage("Something went wrong, please try again."));
                     }
                 }, error -> {
+                    ifViewAttached(view -> view.onLoginErrorMessage("Please check your connection. If problem still occurs, please let us know by form on omniex.nl"));
                     error.printStackTrace();
                     Timber.e(error);
                 }));

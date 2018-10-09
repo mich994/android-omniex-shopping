@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.hannesdorfmann.mosby3.mvp.MvpActivity;
@@ -12,6 +14,7 @@ import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 import javax.inject.Inject;
 
@@ -24,6 +27,9 @@ import nl.omniex.omniexshopping.ui.views.toolbar.CustomToolbar;
 
 @EActivity
 public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V>> extends MvpActivity<V, P> implements BaseView {
+
+    @ViewById(R.id.progress_bar)
+    public FrameLayout mProgressBar;
 
     @Bean
     protected CustomToolbar mCustomToolbar;
@@ -100,6 +106,14 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
         else
             super.onBackPressed();
 
+    }
+
+    public void showProgressBar(){
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgressBar(){
+        mProgressBar.setVisibility(View.GONE);
     }
 
     public void showToastMessage(String message, int duration) throws IllegalArgumentException {

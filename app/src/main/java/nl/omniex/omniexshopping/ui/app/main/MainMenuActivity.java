@@ -1,5 +1,6 @@
 package nl.omniex.omniexshopping.ui.app.main;
 
+import android.app.AlertDialog;
 import android.widget.ImageView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -12,10 +13,15 @@ import java.util.List;
 import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.data.model.MenuItem;
 import nl.omniex.omniexshopping.data.model.cart.Cart;
+import nl.omniex.omniexshopping.data.model.cart.CartItemDelete;
+import nl.omniex.omniexshopping.data.model.cart.CartQuantitySetter;
+import nl.omniex.omniexshopping.ui.app.about.AboutFragment_;
 import nl.omniex.omniexshopping.ui.app.auth.StartActivity_;
 import nl.omniex.omniexshopping.ui.app.categories.CategoriesFragment_;
 import nl.omniex.omniexshopping.ui.app.main.home.HomeFragment_;
+import nl.omniex.omniexshopping.ui.app.newsletter.NewsletterFragment_;
 import nl.omniex.omniexshopping.ui.app.order.OrderActivity_;
+import nl.omniex.omniexshopping.ui.app.product.list.ProductsListFragment_;
 import nl.omniex.omniexshopping.ui.app.profile.ProfileFragment_;
 import nl.omniex.omniexshopping.ui.base.menu.BaseMenuActivity;
 import nl.omniex.omniexshopping.ui.base.menu.MenuAdapter;
@@ -27,6 +33,9 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
 
     @ViewById(R.id.duo_view_menu_background)
     ImageView mDuoDrawerLayout;
+
+    private CartDialog mCartDialog;
+    private boolean mIsCartOpen;
 
     @AfterViews
     void initHomeFragment() {
@@ -69,16 +78,19 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
                     goToFragment(HomeFragment_.builder().build(), false, "");
                     break;
                 case 1:
-                    showToastMessage(menuItem.getTitle(), 0);
+                    goToFragment(ProductsListFragment_.builder().mIsBestSellersList(true).build(), false, "");
                     break;
                 case 2:
                     goToFragment(CategoriesFragment_.builder().build(), false, "");
                     break;
                 case 3:
-                    goToFragment(ProfileFragment_.builder().build(), false,"");
+                    goToFragment(ProfileFragment_.builder().build(), false, "");
                     break;
                 case 4:
-                    showToastMessage(menuItem.getTitle(), 0);
+                    goToFragment(NewsletterFragment_.builder().build(), false, "");
+                    break;
+                case 5:
+                    goToFragment(AboutFragment_.builder().build(), false, "");
                     break;
                 case 6:
                     getPresenter().logout();
@@ -114,7 +126,13 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
 
     @Override
     public void onCartFetched(Cart cart) {
-        CartDialog_.builder().mCart(cart).build().setOnUpdateItemQuantityListener(this).setOnMakeOrderClickListener(this).show(getSupportFragmentManager(), "dialog");
+        if (!mIsCartOpen) {
+            mCartDialog = CartDialog_.builder().mCart(cart).build().setOnUpdateItemQuantityListener(this).setOnMakeOrderClickListener(this);
+            mCartDialog.show(getSupportFragmentManager(), "dialog");
+            mIsCartOpen = true;
+        } else {
+            mCartDialog.refreshCart(cart);
+        }
     }
 
     @Override
@@ -123,8 +141,31 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
     }
 
     @Override
-    public void onUpdateQuantity(int productId, int quantity) {
+    public void onCartDismiss() {
+        mIsCartOpen = false;
+    }
 
+    @Override
+    public void onUpdateQuantity(String productKey, int quantity) {
+        getPresenter().updateCartQuantity(new CartQuantitySetter(productKey, quantity));
+    }
+
+    @Override
+    public void onRemoveCartItem(CartItemDelete cartItemDelete) {
+        getPresenter().deleteCartItem(cartItemDelete);
+    }
+
+    @Override
+    public void onCartItemQuantityUpdated() {
+        getPresenter().getCart();
+    }
+
+    @Override
+    public void onCartEmpty() {
+        if (mCartDialog != null && mCartDialog.isVisible())
+            mCartDialog.dismiss();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setMessage("Cart is empty.").setPositiveButton("OK", ((dialog, which) -> dialog.dismiss()));
+        builder.show();
     }
 
     @Override
@@ -133,4 +174,13 @@ public class MainMenuActivity extends BaseMenuActivity<MenuAdapter, MainMenuView
         StartActivity_.intent(this).start();
     }
 
+    @Override
+    public void startLoading() {
+        showProgressBar();
+    }
+
+    @Override
+    public void stopLoading() {
+        hideProgressBar();
+    }
 }

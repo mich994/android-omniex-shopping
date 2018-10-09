@@ -21,11 +21,12 @@ import nl.omniex.omniexshopping.R;
 import nl.omniex.omniexshopping.ui.base.menu.BaseMenuActivity;
 
 @EFragment
-public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V>> extends MvpFragment<V, P> {
+public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V>> extends MvpFragment<V, P> implements BaseView {
 
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private BaseActivity mBaseActivity;
     private BaseMenuActivity mBaseMenuActivity;
+    private boolean mEnableProgressBar;
 
     @Inject
     Lazy<P> mPresenter;
@@ -62,6 +63,8 @@ public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V
         if ((context instanceof BaseActivity))
             mBaseActivity = (BaseActivity) getActivity();
     }
+
+
 
     @Override
     public void onResume() {
@@ -105,4 +108,21 @@ public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V
         mCompositeDisposable.add(disposable);
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mEnableProgressBar= true;
+    }
+
+    @Override
+    public void startLoading() {
+        if(mEnableProgressBar)
+        getBaseActivity().showProgressBar();
+    }
+
+    @Override
+    public void stopLoading() {
+        getBaseActivity().hideProgressBar();
+        mEnableProgressBar = false;
+    }
 }

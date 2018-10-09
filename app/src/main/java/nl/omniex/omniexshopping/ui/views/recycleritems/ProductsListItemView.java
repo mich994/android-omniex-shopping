@@ -41,7 +41,7 @@ public class ProductsListItemView extends FrameLayout {
     public ProductsListItemView bind(Product product) {
         mProduct = product;
         Glide.with(this)
-                .load(StringUtils.fixUrl(mProduct.getImageUrl()))
+                .load(mProduct.getImageUrl()!=null ? StringUtils.fixUrl(mProduct.getImageUrl()) : mProduct.getImageThumb())
                 .into(mProductImage);
         mProductName.setText(mProduct.getName());
         mProductPrice.setText(mProduct.getPriceExcTaxFormated());

@@ -8,6 +8,7 @@ import nl.omniex.omniexshopping.data.model.cart.AddToCartModel;
 import nl.omniex.omniexshopping.data.repository.CartRepository;
 import nl.omniex.omniexshopping.data.repository.ProductsRepository;
 import nl.omniex.omniexshopping.ui.base.BasePresenter;
+import nl.omniex.omniexshopping.ui.base.BaseView;
 import timber.log.Timber;
 
 public class ProductDetailsPresenter extends BasePresenter<ProductDetailsView> {
@@ -22,6 +23,8 @@ public class ProductDetailsPresenter extends BasePresenter<ProductDetailsView> {
     }
 
     void getProductDetails(Integer id) {
+        ifViewAttached(
+                BaseView::startLoading);
         addDisposable(mProductsRepository
                 .getProductDetails(id)
                 .subscribe(
@@ -29,22 +32,27 @@ public class ProductDetailsPresenter extends BasePresenter<ProductDetailsView> {
                             if (productResponse.isSuccessful() && productResponse.code() == 200) {
                                 ifViewAttached(view -> view.onDetailsFetched(Objects.requireNonNull(productResponse.body()).getProduct()));
                             }
+                            ifViewAttached(BaseView::stopLoading);
                         },
                         error -> {
+                            ifViewAttached(BaseView::stopLoading);
                             error.printStackTrace();
                             Timber.e(error);
                         }));
     }
 
     void addToCart(AddToCartModel addToCartModel) {
+        ifViewAttached(ProductDetailsView::startLoading);
         addDisposable(mCartRepository
                 .addToCart(addToCartModel)
                 .subscribe(
-                        (voidResponse) -> {
-
+                        voidResponse -> {
+                            if(voidResponse.code()==200){}
+                            ifViewAttached(ProductDetailsView::stopLoading);
                         },
                         error -> {
-
+                            ifViewAttached(ProductDetailsView::stopLoading);
+                            Timber.e(error);
                         }));
     }
 }

@@ -12,6 +12,7 @@ public class SharedPrefUtils {
     private static final String ACCESS_TOKEN_KEY = "ACCESS_TOKEN";
     private static final String OLD_TOKEN_KEY = "OLD_TOKEN";
     private static final String IS_USER_LOGGED_KEY = "IS_USER_LOGGED";
+    private static final String NEWSLETTER_STATUS_KEY = "IS_SUBSCRIBED";
 
     private Context mContext;
 
@@ -58,5 +59,17 @@ public class SharedPrefUtils {
     public static boolean isUserLogged() {
         return getSharedPref()
                 .getBoolean(IS_USER_LOGGED_KEY, false);
+    }
+
+    public static void setNewsletterStatus(boolean isSubscribed){
+        getSharedPref()
+                .edit()
+                .putBoolean(NEWSLETTER_STATUS_KEY, isSubscribed)
+                .apply();
+    }
+
+    public static boolean isNewsletterSubscribed(){
+        return getSharedPref()
+                .getBoolean(NEWSLETTER_STATUS_KEY, false);
     }
 }

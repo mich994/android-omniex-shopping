@@ -14,6 +14,7 @@ import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
 import nl.omniex.omniexshopping.R;
+import nl.omniex.omniexshopping.data.model.cart.CartItemDelete;
 import nl.omniex.omniexshopping.data.model.cart.CartProduct;
 import nl.omniex.omniexshopping.ui.adapters.CartAdapter;
 import nl.omniex.omniexshopping.utils.StringUtils;
@@ -27,12 +28,6 @@ public class CartItemView extends LinearLayout {
     @ViewById(R.id.cart_item_name)
     TextView mItemName;
 
-    @ViewById(R.id.cart_item_model)
-    TextView mItemModel;
-
-    @ViewById(R.id.cart_item_stock)
-    TextView mItemInStock;
-
     @ViewById(R.id.cart_item_price_per_one)
     TextView mPricePerOne;
 
@@ -41,6 +36,15 @@ public class CartItemView extends LinearLayout {
 
     @ViewById(R.id.cart_item_total_price)
     TextView mTotalPrice;
+
+    @ViewById(R.id.cart_item_delete)
+    ImageView mDeleteItem;
+
+    @ViewById(R.id.cart_item_quantity_add)
+    ImageView mQuantityAddIv;
+
+    @ViewById(R.id.cart_item_quantity_remove)
+    ImageView mQuantityRemoveIv;
 
     private CartAdapter.OnCartItemClickListener mOnCartItemClickListener;
     private CartProduct mCartProduct;
@@ -54,19 +58,23 @@ public class CartItemView extends LinearLayout {
         setLayoutParams(layoutParams);
     }
 
-    public CartItemView bind(CartProduct cartProduct, int position) {
+    public CartItemView bind(CartProduct cartProduct, int position, boolean isFromOverview) {
         mCartProduct = cartProduct;
         mPosition = position;
         mQuantity = Integer.valueOf(cartProduct.getQuantity());
         mItemName.setText(mCartProduct.getName());
-        mItemModel.setText(mCartProduct.getKey());
-        mItemInStock.setText("Is in stock: " + mCartProduct.getInStock());
         mPricePerOne.setText("Per one: " + mCartProduct.getPrice());
         mQuantityCount.setText(String.valueOf(mQuantity));
         mTotalPrice.setText("Total price: " + mCartProduct.getTotalPrice());
         Glide.with(this)
                 .load(StringUtils.fixUrl(mCartProduct.getThumb()))
                 .into(mCartImage);
+        if(isFromOverview){
+            mQuantityAddIv.setVisibility(GONE);
+            mQuantityRemoveIv.setVisibility(GONE);
+            mDeleteItem.setVisibility(GONE);
+        }
+
         return this;
     }
 
@@ -74,7 +82,7 @@ public class CartItemView extends LinearLayout {
         mOnCartItemClickListener = onCartItemClickListener;
     }
 
-    @Click({R.id.cart_item_quantity_add, R.id.cart_item_quantity_remove})
+    @Click({R.id.cart_item_quantity_add, R.id.cart_item_quantity_remove,R.id.cart_item_delete})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.cart_item_quantity_add:
@@ -83,6 +91,9 @@ public class CartItemView extends LinearLayout {
             case R.id.cart_item_quantity_remove:
                 handleQuantity(false);
                 break;
+            case R.id.cart_item_delete:
+                mOnCartItemClickListener.onRemoveItem(new CartItemDelete(Integer.valueOf(mCartProduct.getKey())));
+                break;
         }
     }
 
@@ -90,9 +101,11 @@ public class CartItemView extends LinearLayout {
         if (!increase && mQuantity - 1 > 0) {
             mQuantity -= 1;
             mQuantityCount.setText(String.valueOf(mQuantity));
+            mOnCartItemClickListener.onUpdateItemQuantity(mCartProduct.getKey(), mQuantity);
         } else if (increase) {
             mQuantity += 1;
             mQuantityCount.setText(String.valueOf(mQuantity));
+            mOnCartItemClickListener.onUpdateItemQuantity(mCartProduct.getKey(), mQuantity);
         }
     }
 }

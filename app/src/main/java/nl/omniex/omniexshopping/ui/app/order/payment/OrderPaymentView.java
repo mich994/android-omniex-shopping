@@ -8,4 +8,6 @@ import nl.omniex.omniexshopping.ui.base.BaseView;
 public interface OrderPaymentView extends BaseView {
 
     void onPaymentAddressesFetched(List<Address> addressList);
+
+    void onPaymentMethodSet();
 }

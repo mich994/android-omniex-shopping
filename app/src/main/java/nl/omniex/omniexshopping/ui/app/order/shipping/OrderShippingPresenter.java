@@ -1,11 +1,14 @@
 package nl.omniex.omniexshopping.ui.app.order.shipping;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import javax.inject.Inject;
 
 import nl.omniex.omniexshopping.data.model.address.Address;
-import nl.omniex.omniexshopping.data.model.order.ExistingAddress;
 import nl.omniex.omniexshopping.data.repository.AddressRepository;
 import nl.omniex.omniexshopping.ui.base.BasePresenter;
+import timber.log.Timber;
 
 public class OrderShippingPresenter extends BasePresenter<OrderShippingView> {
 
@@ -21,8 +24,11 @@ public class OrderShippingPresenter extends BasePresenter<OrderShippingView> {
                 .getShippingAddresses()
                 .subscribe(
                         shippingAddressesResponse -> {
-                            ifViewAttached(view -> view.onShippingAddressesFetched(shippingAddressesResponse.body().getShippingAddressList().getAddressList()));
-                        }, Throwable::printStackTrace));
+                            ifViewAttached(view -> view.onShippingAddressesFetched(new ArrayList<>(new HashSet<>(shippingAddressesResponse.body().getShippingAddressList().getAddressList()))));
+                        }, error->{
+                            ifViewAttached(OrderShippingView::onGetShippingAddressesFailed);
+                            Timber.e(error);
+                        }));
     }
 
     void setShippingAddress(Address existingAddress) {

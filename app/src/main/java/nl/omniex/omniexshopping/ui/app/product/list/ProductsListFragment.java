@@ -1,5 +1,6 @@
 package nl.omniex.omniexshopping.ui.app.product.list;
 
+import android.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -30,15 +31,30 @@ public class ProductsListFragment extends BaseFragment<ProductsListView, Product
     @FragmentArg
     Integer mCategoryId;
 
+    @FragmentArg
+    Boolean mIsBestSellersList;
+
     @AfterViews
-    void initProductsList(){
+    void initProductsList() {
         mProductsListAdapter.setItemClickListener(this);
         mProductsRv.setAdapter(mProductsListAdapter);
-        getPresenter().getProductsList(mCategoryId);
+        if (mIsBestSellersList)
+            getPresenter().getBestsellers();
+        else
+            getPresenter().getProductsList(mCategoryId);
     }
 
     @Override
     public void onProductsListFetched(List<Product> productList) {
+        if (productList.isEmpty()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                    .setPositiveButton("OK", ((dialog, which) -> {
+                        dialog.dismiss();
+                        getFragmentManager().popBackStack();
+                    }))
+                    .setMessage("Stay tuned. We will add products in this category soon.");
+            builder.show();
+        }
         mProductsListAdapter.setItems(productList);
     }
 
@@ -46,4 +62,5 @@ public class ProductsListFragment extends BaseFragment<ProductsListView, Product
     public void onItemClick(Product product) {
         goToFragment(ProductDetailsFragment_.builder().mProductId(product.getProductId()).build(), true);
     }
+
 }

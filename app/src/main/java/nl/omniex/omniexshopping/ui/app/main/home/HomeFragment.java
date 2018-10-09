@@ -30,7 +30,9 @@ public class HomeFragment extends BaseFragment<HomeView, HomePresenter> implemen
     void initFeaturedProducts(){
         mFeatureProductsAdapter.setItemClickListener(this);
         mFeaturedProductsRv.setAdapter(mFeatureProductsAdapter);
+        if(mFeatureProductsAdapter.getItemCount()==0)
         getPresenter().getListOfFeatured();
+        getPresenter().getBestseller();
     }
 
     @Override

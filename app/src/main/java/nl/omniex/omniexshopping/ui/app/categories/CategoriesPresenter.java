@@ -4,6 +4,8 @@ import javax.inject.Inject;
 
 import nl.omniex.omniexshopping.data.repository.ProductsRepository;
 import nl.omniex.omniexshopping.ui.base.BasePresenter;
+import nl.omniex.omniexshopping.ui.base.BaseView;
+import timber.log.Timber;
 
 public class CategoriesPresenter extends BasePresenter<CategoriesView> {
 
@@ -15,6 +17,7 @@ public class CategoriesPresenter extends BasePresenter<CategoriesView> {
     }
 
     void getCategories() {
+        ifViewAttached(BaseView::startLoading);
         addDisposable(mProductsRepository
                 .getCategories()
                 .subscribe(
@@ -22,7 +25,11 @@ public class CategoriesPresenter extends BasePresenter<CategoriesView> {
                             if(categoriesResponse.isSuccessful() && categoriesResponse.code()==200){
                                 ifViewAttached(view -> view.onCategoriesFetched(categoriesResponse.body().getCategoryList()));
                             }
-                        }, Throwable::printStackTrace));
+                            ifViewAttached(BaseView::stopLoading);
+                        }, error->{
+                            ifViewAttached(BaseView::stopLoading);
+                            Timber.e(error);
+                        }));
     }
 
 }
