@@ -31,9 +31,9 @@ public abstract class BaseMenuActivity<MenuAdapter extends BaseMenuAdapter, MVie
         super.onFirstCreate();
         mOverlay = findViewById(getOverlayRes());
         getSupportFragmentManager().addOnBackStackChangedListener(() -> {
-            if(getSupportFragmentManager().getBackStackEntryCount()>1){
+            if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
                 mDuoDrawerLayout.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            }else {
+            } else {
                 mDuoDrawerLayout.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_UNLOCKED);
             }
         });
@@ -69,16 +69,20 @@ public abstract class BaseMenuActivity<MenuAdapter extends BaseMenuAdapter, MVie
         mDuoDrawerLayout.openDrawer();
     }
 
-    public BaseMenuActivity getBaseMenuActivity(){
+    public BaseMenuActivity getBaseMenuActivity() {
         return this;
     }
 
     @Override
     public void toggleMenu() {
-        if (mDuoDrawerLayout.isDrawerOpen())
-            closeMenu();
-        else
-            openMenu();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            if (mDuoDrawerLayout.isDrawerOpen())
+                closeMenu();
+            else
+                openMenu();
+        }
     }
 
     @Override

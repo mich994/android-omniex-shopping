@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_lighter"
+    android:background="@color/icons"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
@@ -60,6 +60,12 @@
                 android:text="@string/exit" />
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_margin="@dimen/margin_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ox"/>
 
     </LinearLayout>
 

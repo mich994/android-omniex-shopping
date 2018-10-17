@@ -12,6 +12,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator;
@@ -50,6 +51,7 @@ public class ProductDetailsFragment extends BaseFragment<ProductDetailsView, Pro
     private DetailsImagePagerAdapter mDetailsImagePagerAdapter;
     private int mQuantity = 1;
     private MainMenuActivity mMainMenuActivity;
+    private List<String> mImageUrlList = new ArrayList<>();
 
     @AfterViews
     void initializeDetails() {
@@ -100,7 +102,12 @@ public class ProductDetailsFragment extends BaseFragment<ProductDetailsView, Pro
 
     @Override
     public void onDetailsFetched(Product product) {
-        initViewPager(product.getImageUrlsList());
+        if((product.getImageUrlsList()==null ||product.getImageUrlsList().isEmpty()) && product.getImageUrl()!=null){
+            mImageUrlList.add(product.getImageUrl());
+        }else {
+            mImageUrlList.addAll(product.getImageUrlsList());
+        }
+        initViewPager(mImageUrlList);
         mPriceTv.setText(product.getPriceExcTaxFormated());
         mDescriptionTv.setText(Html.fromHtml(product.getDescription()));
     }

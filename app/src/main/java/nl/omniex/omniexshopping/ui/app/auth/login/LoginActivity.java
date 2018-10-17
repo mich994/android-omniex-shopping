@@ -25,8 +25,8 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
 
     @AfterViews
     void setTempCredentials(){
-        mEmailInput.setText("michlip994@gmail.com");
-        mPasswordInput.setText("micho994");
+//        mEmailInput.setText("michlip994@gmail.com");
+//        mPasswordInput.setText("micho994");
     }
 
     @Click({R.id.login_login_btn, R.id.login_exit_btn})

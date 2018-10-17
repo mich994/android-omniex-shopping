@@ -2,12 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_marginBottom="-16dp"
-    android:padding="@dimen/margin_large"
+    android:padding="@dimen/margin_big"
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/omniex_logo_transparent"/>
+
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:src="@drawable/logo_transparent"/>
 
 </FrameLayout>
